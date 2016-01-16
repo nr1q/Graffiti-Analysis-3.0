@@ -2,8 +2,8 @@
 
 #include "simpleColor.h"
 
-class guiColor{
-
+class guiColor
+{
     public:
 
         //------------------------------------------------
@@ -87,4 +87,3 @@ class guiColor{
         bool bUseSelected;
 
 };
-

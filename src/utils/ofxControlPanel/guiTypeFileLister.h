@@ -15,8 +15,8 @@ class guiTypeFileLister : public guiBaseObject{
 
      public:
 
-	
-	
+
+
 		guiTypeFileLister(){
             lister = NULL;
             pct = 0;
@@ -27,7 +27,7 @@ class guiTypeFileLister : public guiBaseObject{
             startPos = 0;
             endPos = 0;
             usingSlider = false;
-			
+
         }
 
         //------------------------------------------------
@@ -102,13 +102,13 @@ class guiTypeFileLister : public guiBaseObject{
                         ofPushStyle();
                             ofFill();
                             glColor4fv( fgColor.getSelectedColorF() );
-                            ofRect(x, y+yPos+4, width-5, -lineSpacing);
+                            ofDrawRectangle(x, y+yPos+4, width-5, -lineSpacing);
                         ofPopStyle();
                     }else if( i == selectionTmp){
                         ofPushStyle();
                             ofNoFill();
                             glColor4fv(outlineColor.getColorF());
-                            ofRect(x, y+yPos+4, width-2, -lineSpacing);
+                            ofDrawRectangle(x, y+yPos+4, width-2, -lineSpacing);
                         ofPopStyle();
                     }
 
@@ -129,19 +129,19 @@ class guiTypeFileLister : public guiBaseObject{
                     //draw the background
                     ofFill();
                     glColor4fv(bgColor.getColorF());
-                    ofRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+                    ofDrawRectangle(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
 
                     glColor4fv(textColor.getColorF());
                     guiBaseObject::renderText();
 
                     ofFill();
                     glColor4fv(fgColor.getColorF());
-                    ofRect(hitArea.x, hitArea.y + (hitArea.height - 5) * pct, sliderWidth, 5);
+                    ofDrawRectangle(hitArea.x, hitArea.y + (hitArea.height - 5) * pct, sliderWidth, 5);
 
                     ofNoFill();
                     glColor4fv(outlineColor.getColorF());
-                    ofRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
-                    ofRect(hitArea.x , hitArea.y, sliderWidth, hitArea.height);
+                    ofDrawRectangle(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+                    ofDrawRectangle(hitArea.x , hitArea.y, sliderWidth, hitArea.height);
 
                     glColor4fv(textColor.getColorF());
                     if(lister != NULL)drawRecords(hitArea.x+sliderWidth + 5, hitArea.y, boundingBox.width-(sliderWidth + 5), boundingBox.height);

@@ -6,23 +6,24 @@
  *  Copyright 2010 csugrue. All rights reserved.
  *
  */
+
 #pragma once
 
 #include "ofMain.h"
-#include "ofxVectorMath.h"
 
-bool pointInPolygon(float x, float y, vector<ofPoint>pts);
 
-bool isInsideRect(float x, float y, ofRectangle rect);
+bool pointInPolygon (float x, float y, vector<ofVec3f>pts);
 
-bool intersectionTwoLines( ofPoint pt1, ofPoint pt2, ofPoint pt3, ofPoint pt4, ofPoint * iPt );
-bool intersectionTwoLines2( ofPoint pt1, ofPoint pt2, ofPoint pt3, ofPoint pt4, ofPoint * iPt );
+static bool isInsideRect (float x, float y, ofRectangle rect);
 
-bool findClosestIntersectionLineAndPoly( ofPoint a, ofPoint b, vector<ofPoint> pts, ofPoint & closestPoint, int & sideId );
+bool intersectionTwoLines (ofVec3f pt1, ofVec3f pt2, ofVec3f pt3, ofVec3f pt4, ofVec3f * iPt);
+bool intersectionTwoLines2 (ofVec3f pt1, ofVec3f pt2, ofVec3f pt3, ofVec3f pt4, ofVec3f * iPt);
 
-bool minLineBetweenLineSegments( ofPoint pt1, ofPoint pt2, ofPoint pt3, ofPoint pt4, ofPoint * pA, ofPoint * pB);
+bool findClosestIntersectionLineAndPoly (ofVec3f a, ofVec3f b, vector<ofVec3f> pts, ofVec3f & closestPoint, int & sideId);
 
-ofPoint distanceToSegment(ofPoint p1, ofPoint p2, ofPoint p3);
+bool minLineBetweenLineSegments (ofVec3f pt1, ofVec3f pt2, ofVec3f pt3, ofVec3f pt4, ofVec3f * pA, ofVec3f * pB);
 
-bool isIntersectionPoly(ofPoint pt1, ofPoint pt2, vector<ofPoint> pts);
-bool isIntersectionPoly(ofPoint pt1, ofPoint pt2, vector<ofPoint> pts, ofPoint & iPt);
+ofVec3f distanceToSegment (ofVec3f p1, ofVec3f p2, ofVec3f p3);
+
+bool isIntersectionPoly (ofVec3f pt1, ofVec3f pt2, vector<ofVec3f> pts);
+bool isIntersectionPoly (ofVec3f pt1, ofVec3f pt2, vector<ofVec3f> pts, ofVec3f & iPt);

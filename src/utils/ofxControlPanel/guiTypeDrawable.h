@@ -31,14 +31,14 @@ class drawableStacker : public ofBaseDraws{
 
     void draw(float x, float y, float w, float h){
         ofSetColor(0xFFFFFF);
-        for(int i = 0; i < drawers.size(); i++){
+        for(unsigned i = 0; i < drawers.size(); i++){
             drawers[i]->draw(x, y, w, h);
         }
     }
 
     void draw(float x, float y){
         ofSetColor(0xFFFFFF);
-        for(int i = 0; i < drawers.size(); i++){
+        for(unsigned i = 0; i < drawers.size(); i++){
             drawers[i]->draw(x, y, width, height);
         }
     }
@@ -84,7 +84,7 @@ class guiTypeDrawable : public guiBaseObject{
                     //draw the background
                     ofFill();
                     glColor4fv(bgColor.getColorF());
-                    ofRect(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
+                    ofDrawRectangle(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
 
                     ofDisableAlphaBlending();
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxDirList.h"
+//#include "ofxDirList.h" // deprecated
 
 typedef struct{
     string filename;
@@ -12,8 +12,8 @@ typedef struct{
 //    if( e1
 //}
 
-class simpleFileLister : public ofxDirList{
-
+class simpleFileLister : public ofDirectory
+{
      public:
 
         simpleFileLister(){
@@ -31,18 +31,18 @@ class simpleFileLister : public ofxDirList{
             }
             else return 0;
         }
-	
+
 		int listDir(string directory){
             bRevSort        = false;
             entries.clear();
 
-            ofxDirList::reset();
-            int numFiles = ofxDirList::listDir(directory);
+            ofDirectory::reset();
+            int numFiles = ofDirectory::listDir(directory);
             entries.assign(numFiles, entry());
 
             for(int i = 0; i < numFiles; i++){
-                entries[i].filename = ofxDirList::getName(i);
-                entries[i].fullpath = ofxDirList::getPath(i);
+                entries[i].filename = ofDirectory::getName(i);
+                entries[i].fullpath = ofDirectory::getPath(i);
             }
 
             lastDirectory = directory;
@@ -66,7 +66,7 @@ class simpleFileLister : public ofxDirList{
 
         //------------------------------------------------
         string getName(int which){
-            if( which >= 0 && which < entries.size() ){
+            if( which >= 0 && (unsigned)which < entries.size() ){
                 return entries[which].filename;
             }else{
                 return "";
@@ -75,7 +75,7 @@ class simpleFileLister : public ofxDirList{
 
         //------------------------------------------------
         string getPath(int which){
-            if( which >= 0 && which < entries.size() ){
+            if( which >= 0 && (unsigned)which < entries.size() ){
                 return entries[which].fullpath;
             }else{
                 return "";
@@ -84,7 +84,7 @@ class simpleFileLister : public ofxDirList{
 
         //------------------------------------------------
         void setSelectedFile(int which){
-            if( which >= 0 && which < entries.size() ){
+            if( which >= 0 && (unsigned)which < entries.size() ){
                 selected    = which;
                 selectedChanged = true;
             }
@@ -92,7 +92,7 @@ class simpleFileLister : public ofxDirList{
 
         //------------------------------------------------
         string getSelectedName(){
-            if( selected >= 0 && selected < entries.size() ){
+            if( selected >= 0 && (unsigned)selected < entries.size() ){
                 return entries[selected].filename;
             }else{
                 return "";
@@ -101,7 +101,7 @@ class simpleFileLister : public ofxDirList{
 
         //------------------------------------------------
         string getSelectedPath(){
-            if( selected >= 0 && selected < entries.size() ){
+            if( selected >= 0 && (unsigned)selected < entries.size() ){
                 return entries[selected].fullpath;
             }else{
                 return "";

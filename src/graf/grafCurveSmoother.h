@@ -5,21 +5,16 @@
 
 class grafCurveSmoother
 {
-    public:
-        grafCurveSmoother();
-        virtual ~grafCurveSmoother();
+public:
+    grafCurveSmoother();
+    virtual ~grafCurveSmoother();
+    void smoothTag (int resolution, grafTagMulti* src);
 
-        void smoothTag( int resolution, grafTagMulti * src);
-	
+protected:
+    void smoothStroke (int resolution, strokes* stroke);
+    grafTagMulti tempTag;
 
-
-    protected:
-		
-		void smoothStroke(int resolution, strokes * stroke);
-		
-		grafTagMulti tempTag;
-	
-	private:
+private:
 };
 
-#endif // GRAFCURVESMOOTHER_H
+#endif

@@ -1,20 +1,19 @@
 #pragma once
 
-
 #include "guiBaseObject.h"
 #include "guiColor.h"
 #include "simpleColor.h"
 #include "guiValue.h"
 
-class guiTypeToggle : public guiBaseObject{
-
+class guiTypeToggle : public guiBaseObject
+{
     public:
 
         //------------------------------------------------
         void setup(string toggleName, bool defaultVal){
             value.addValue( (int)defaultVal, 0, 1);
             name = toggleName;
-			bShowText = false;
+                        bShowText = false;
         }
 
         //-----------------------------------------------.
@@ -31,7 +30,7 @@ class guiTypeToggle : public guiBaseObject{
         }
 
         //-----------------------------------------------.
-        void render(){
+        void render() {
             ofPushStyle();
                 glPushMatrix();
                     guiBaseObject::renderText();
@@ -39,12 +38,12 @@ class guiTypeToggle : public guiBaseObject{
                     //draw the background
                     ofFill();
                     glColor4fv(bgColor.getColorF());
-                    ofRect(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
+                    ofDrawRectangle(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
 
                     //draw the outline
                     ofNoFill();
                     glColor4fv(outlineColor.getColorF());
-                    ofRect(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
+                    ofDrawRectangle(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
 
                     if( value.getValueI() == 1){
                         ofFill();
@@ -53,14 +52,12 @@ class guiTypeToggle : public guiBaseObject{
                     }
 
                     glColor4fv(fgColor.getColorF());
-                    ofRect(hitArea.x+3, hitArea.y+3, -6 + hitArea.width, -6 + hitArea.height);
-					
-					glColor4fv(textColor.getColorF());
-					displayText.renderString(name, hitArea.x + 6 + hitArea.width,hitArea.y + hitArea.height -2);
+                    ofDrawRectangle(hitArea.x+3, hitArea.y+3, -6 + hitArea.width, -6 + hitArea.height);
+
+                    glColor4fv(textColor.getColorF());
+                    displayText.renderString(name, hitArea.x + 6 + hitArea.width,hitArea.y + hitArea.height -2);
 
                 glPopMatrix();
             ofPopStyle();
         }
-
-
 };

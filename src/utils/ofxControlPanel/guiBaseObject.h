@@ -5,22 +5,23 @@
 #include "guiValue.h"
 #include "guiTextBase.h"
 
-#define SG_STATE_NORMAL 0
+#define SG_STATE_NORMAL   0
 #define SG_STATE_SELECTED 1
 
-#define SG_TYPE_FLOAT 0
-#define SG_TYPE_INT 1
-#define SG_TYPE_BOOL 2
+#define SG_TYPE_FLOAT  0
+#define SG_TYPE_INT    1
+#define SG_TYPE_BOOL   2
 #define SG_TYPE_STRING 3
 
-static bool isInsideRect(float x, float y, ofRectangle rect){
+static bool isInsideRect(float x, float y, ofRectangle rect)
+{
     return ( x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height );
 }
 
-class guiBaseObject{
-
+class guiBaseObject
+{
     public:
-        guiBaseObject(){
+        guiBaseObject() {
             readOnly    = false;
             bShowText   = true;
             locked      = false;
@@ -41,8 +42,8 @@ class guiBaseObject{
             //these need to be setable at some point
             fontSize     = 11;
             titleSpacing = 5;
-
         }
+        virtual ~guiBaseObject() {};
 
         //------------------------------------------
         virtual void setXmlName(string _xmlName){
@@ -50,7 +51,8 @@ class guiBaseObject{
         }
 
         //--------------------------------------------
-        virtual void setFont(ofTrueTypeFont * fontPtr){
+        virtual void setFont(ofTrueTypeFont * fontPtr)
+        {
             displayText.setFont(fontPtr);
         }
 
@@ -66,7 +68,7 @@ class guiBaseObject{
                 float offsetX = x - hitArea.x;
                 float offsetY = y - hitArea.y;
 
-                for(int i = 0; i < children.size(); i++){
+                for (unsigned i = 0; i < children.size(); i++) {
                     children[i]->checkHit(offsetX, offsetY, isRelative);
                 }
                 return true;
@@ -87,7 +89,7 @@ class guiBaseObject{
         virtual void release(){
             state = SG_STATE_NORMAL;
             setNormal();
-            for(int i = 0; i < children.size(); i++){
+            for (unsigned i = 0; i < children.size(); i++) {
                 children[i]->release();
             }
          }
@@ -116,12 +118,12 @@ class guiBaseObject{
             bShowText = showText;
         }
 
-		//-----------------------------------------------
-		virtual void setTypeString(){
-			dataType = SG_TYPE_STRING;
-		}
-		
-	//-----------------------------------------------
+        //-----------------------------------------------
+        virtual void setTypeString(){
+                dataType = SG_TYPE_STRING;
+        }
+
+        //-----------------------------------------------
         virtual void setTypeInt(){
             dataType = SG_TYPE_INT;
         }
@@ -137,7 +139,7 @@ class guiBaseObject{
         }
 
         //-----------------------------------------------
-        virtual void setPosition(float x, float y){
+        virtual void setPosition (float x, float y) {
             boundingBox.x = x;
             boundingBox.y = y;
             hitArea.x     = x;
@@ -145,7 +147,7 @@ class guiBaseObject{
         }
 
         //------------------------------------------------
-        virtual void setDimensions(float width, float height){
+        virtual void setDimensions (float width, float height) {
             hitArea.width       = width;
             hitArea.height      = height;
             boundingBox.width   = width;
@@ -204,8 +206,8 @@ class guiBaseObject{
 
         //every time we update the value of our text
         //-----------------------------------------------
-        virtual void updateText(){
-
+        virtual void updateText()
+        {
             drawStr = name;
             for(int i = 0; i < value.getNumValues(); i++){
                 if( dataType == SG_TYPE_FLOAT ){
@@ -235,8 +237,9 @@ class guiBaseObject{
         }
 
         //---------------------------------------------
-        virtual void renderText(){
-            if(!bShowText) return;
+        virtual void renderText()
+        {
+            if (! bShowText) return;
 
             glColor4fv(textColor.getColorF());
             displayText.renderText(boundingBox.x, boundingBox.y + displayText.getTextSingleLineHeight());
@@ -304,12 +307,12 @@ class guiBaseObject{
             textColor.setSelectedColor(selR, selG, selB, selA);
          }
 
-		//-----------------------------------------------
-		virtual bool guiBaseObject::hasValueChanged(unsigned int which){
-			return value.hasValueChanged(which);
-		}
-		
-		//list of properties
+        ////-----------------------------------------------
+        //virtual bool guiBaseObject::hasValueChanged(unsigned int which){
+                //return value.hasValueChanged(which);
+        //}
+
+        //list of properties
         //------------------
         string name;
         string drawStr;
@@ -332,7 +335,7 @@ class guiBaseObject{
         guiTextBase displayText;
 
         //-------------------
-        vector <guiBaseObject *>children;
+        vector<guiBaseObject *> children;
 
         //bool isRelative;
         bool locked;
@@ -345,4 +348,3 @@ class guiBaseObject{
         int  state;
         int  dataType;
 };
-

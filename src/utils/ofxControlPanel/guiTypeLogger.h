@@ -68,19 +68,19 @@ class guiTypeLogger : public guiBaseObject{
                     //draw the background
                     ofFill();
                     glColor4fv(bgColor.getColorF());
-                    ofRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+                    ofDrawRectangle(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
 
                     glColor4fv(textColor.getColorF());
                     guiBaseObject::renderText();
 
                     ofFill();
                     glColor4fv(fgColor.getColorF());
-                    ofRect(hitArea.x, hitArea.y + (hitArea.height - 5) * pct, hitArea.width, 5);
+                    ofDrawRectangle(hitArea.x, hitArea.y + (hitArea.height - 5) * pct, hitArea.width, 5);
 
                     ofNoFill();
                     glColor4fv(outlineColor.getColorF());
-                    ofRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
-                    ofRect(hitArea.x , hitArea.y, hitArea.width, hitArea.height);
+                    ofDrawRectangle(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+                    ofDrawRectangle(hitArea.x , hitArea.y, hitArea.width, hitArea.height);
 
                     glColor4fv(textColor.getColorF());
                     if(log != NULL)drawRecords(hitArea.x+hitArea.width + 5, hitArea.y, boundingBox.width-(hitArea.width + 5), boundingBox.height);

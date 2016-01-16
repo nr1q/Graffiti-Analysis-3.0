@@ -10,12 +10,13 @@
 
 //#define borderWidth  10.f
 //#define topSpacing   20.f
-//#define tabWidth	25.f
-//#define tabHeight	10.f
+//#define tabWidth     25.f
+//#define tabHeight    10.f
 
-class xmlAssociation{
+class xmlAssociation
+{
     public:
-        xmlAssociation(guiBaseObject * objPtr, string xmlNameIn, int numParamsIn){
+        xmlAssociation (guiBaseObject * objPtr, string xmlNameIn, int numParamsIn) {
             guiObj      = objPtr;
             xmlName     = xmlNameIn;
             numParams   = numParamsIn;
@@ -26,14 +27,13 @@ class xmlAssociation{
         int numParams;
 };
 
-class ofxControlPanel: public guiBaseObject{
-
-	public:
-
+class ofxControlPanel: public guiBaseObject
+{
+    public:
         ofxControlPanel();
-        ~ofxControlPanel();
+        virtual ~ofxControlPanel();
 
-        void setup(string controlPanelName, float panelX, float panelY, float width, float height, bool bUseMyFont= false);
+        void setup (string controlPanelName, float panelX, float panelY, float width, float height, bool bUseMyFont= false);
         void loadFont( string fontName, int fontsize );
 
         guiTypePanel * addPanel(string panelName, int numColumns, bool locked = false);
@@ -41,16 +41,17 @@ class ofxControlPanel: public guiBaseObject{
         void setWhichPanel(int whichPanel);
         void setWhichPanel(string panelName);
         void setWhichColumn(int column);
-	
-		void clearAllChanged();
-	
-	
-		int getSelectedPanel(){  return selectedPanel; };
-		string getSelectedPanelName(){	
-			if (panels.size() > 0 && selectedPanel < panels.size()) return panels[selectedPanel]->name;
-			else return "";
-		};
-		void setSelectedPanel( string panelName );
+
+        void clearAllChanged();
+
+        int getSelectedPanel(){  return selectedPanel; };
+        string getSelectedPanelName() {
+            if (panels.size() > 0 && (unsigned)selectedPanel < panels.size())
+                return panels[selectedPanel]->name;
+            else
+                return "";
+        };
+        void setSelectedPanel( string panelName );
 
         void setSliderWidth(int width);
 
@@ -62,22 +63,22 @@ class ofxControlPanel: public guiBaseObject{
         guiTypeCustom * addCustomRect(string name, guiCustomImpl * customPtr, int drawW, int drawH);
         guiTypeLogger * addLogger(string name, simpleLogger * logger, int drawW, int drawH);
         guiTypeFileLister * addFileLister(string name, simpleFileLister * lister, int drawW, int drawH);
-		guiTypeTextInput * addTextInput(string name, string xmlName, string value, int maxX, int maxY );
-		guiTypeSpace* addSpace(string name="space", string xmlName="space",int defaultValue = 0);
-		guiTypeText * addText(string name, string xmlName);
-		
+        guiTypeTextInput * addTextInput(string name, string xmlName, string value, int maxX, int maxY );
+        guiTypeSpace* addSpace(string name="space", string xmlName="space",int defaultValue = 0);
+        guiTypeText * addText(string name, string xmlName);
+
         void setValueB(string xmlName, bool value,  int whichParam = 0);
         void setValueI(string xmlName, int value,  int whichParam = 0);
         void setValueF(string xmlName, float value,  int whichParam = 0);
-		void setValueS( string xmlName, string value, int whichParam = 0);
+        void setValueS( string xmlName, string value, int whichParam = 0);
         bool getValueB(string xmlName, int whichParam = 0);
         float getValueF(string xmlName, int whichParam = 0);
         int getValueI(string xmlName, int whichParam = 0);
-		string getValueS(string xmlName, int whichParam = 0);
-		
-		void addChar(int key, int whichParam = 0);
-		void deleteLastChar( int whichParam = 0);
-	
+        string getValueS(string xmlName, int whichParam = 0);
+
+        void addChar(int key, int whichParam = 0);
+        void deleteLastChar( int whichParam = 0);
+
         void setIncrementSave(string incrmentalFileBaseName);
         void disableIncrementSave();
         void loadSettings(string xmlFile);
@@ -98,12 +99,12 @@ class ofxControlPanel: public guiBaseObject{
         void updateBoundingBox();
         void update();
         void draw();
-	
-		bool isAnyTextBoxActive();
-		bool isMouseInPanel(int x, int y);
 
-		bool hasValueChanged(string xmlName, int whichParam=0);
-		
+        bool isAnyTextBoxActive();
+        bool isMouseInPanel(int x, int y);
+
+        bool hasValueChanged(string xmlName, int whichParam=0);
+
         ofTrueTypeFont guiTTFFont;
 
         vector <xmlAssociation> xmlObjects;
@@ -111,46 +112,43 @@ class ofxControlPanel: public guiBaseObject{
         vector <guiTypePanel *> panels;
         vector <ofRectangle> panelTabs;
 
-		ofxXmlSettings settings;
-		string currentXmlFile;
-		string settingsDirectory;
+        ofxXmlSettings settings;
+        string currentXmlFile;
+        string settingsDirectory;
 
-		ofRectangle topBar;
-		ofRectangle minimizeButton;
-		ofRectangle saveButton;
-		ofRectangle restoreButton;
+        ofRectangle topBar;
+        ofRectangle minimizeButton;
+        ofRectangle saveButton;
+        ofRectangle restoreButton;
 
         string incrementSaveName;
 
         bool hidden;
         bool usingXml;
         bool bUseTTFFont;
-		bool minimize;
-		bool saveDown;
-		bool incrementSave;
-		bool restoreDown;
-		bool bDraggable;
-		bool bMouseInPanel;
-		bool bNewPanelSelected;
+        bool minimize;
+        bool saveDown;
+        bool incrementSave;
+        bool restoreDown;
+        bool bDraggable;
+        bool bMouseInPanel;
+        bool bNewPanelSelected;
 
-		int selectedPanel;
+        int selectedPanel;
         int currentPanel;
 
-        ofPoint prevMouse;
+        ofVec3f prevMouse;
 
-		int sliderWidth;
+        int sliderWidth;
 
 
-		ofPoint mouseDownPoint;
+        ofVec3f mouseDownPoint;
 
-		bool dragging;
-		
-		bool bDrawOutline, bShowTabs, bDrawHeader, bDrawLock;
-		float borderWidth;
-		float topSpacing;
-		float tabWidth;
-		float tabHeight;
+        bool dragging;
 
+        bool bDrawOutline, bShowTabs, bDrawHeader, bDrawLock;
+        float borderWidth;
+        float topSpacing;
+        float tabWidth;
+        float tabHeight;
 };
-
-

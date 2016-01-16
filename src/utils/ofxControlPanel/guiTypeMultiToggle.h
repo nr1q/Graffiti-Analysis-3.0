@@ -20,7 +20,7 @@ class guiTypeMultiToggle : public guiBaseObject{
             name = multiToggleName;
 
             float lineHeight = 0;
-            for(int i = 0; i < bNames .size(); i++){
+            for(unsigned i = 0; i < bNames .size(); i++){
                 float lineWidth = boxSpacing + boxSize + displayText.stringWidth(bNames[i]);
 
                 if( lineWidth > hitArea.width ){
@@ -46,7 +46,7 @@ class guiTypeMultiToggle : public guiBaseObject{
                 float relX = x - hitArea.x;
                 float relY = y - hitArea.y;
 
-                for(int i = 0; i < bNames.size(); i++){
+                for(unsigned i = 0; i < bNames.size(); i++){
                     ofRectangle tmpRect(0, i * (boxSize+boxSpacing), boxSize, boxSize);
                     if( isInsideRect(relX, relY, tmpRect) ){
                         value.setValue(i, 0);
@@ -66,9 +66,9 @@ class guiTypeMultiToggle : public guiBaseObject{
                 //draw the background
                 ofFill();
                 glColor4fv(bgColor.getColorF());
-                ofRect(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
+                ofDrawRectangle(hitArea.x, hitArea.y, hitArea.width, hitArea.height);
 
-                for(int i = 0; i < bNames.size(); i++){
+                for(unsigned i = 0; i < bNames.size(); i++){
                     float bx = hitArea.x + 0;
                     float by = hitArea.y + i * (boxSize+boxSpacing);
 
@@ -79,11 +79,11 @@ class guiTypeMultiToggle : public guiBaseObject{
                     }
 
                     glColor4fv(fgColor.getColorF());
-                    ofRect(bx, by, boxSize, boxSize);
+                    ofDrawRectangle(bx, by, boxSize, boxSize);
 
                     ofNoFill();
                     glColor4fv(outlineColor.getColorF());
-                    ofRect(bx, by, boxSize, boxSize);
+                    ofDrawRectangle(bx, by, boxSize, boxSize);
 
                     glColor4fv(textColor.getColorF());
                     displayText.renderString(bNames[i], bx + boxSize + boxSpacing, by + boxSize -2);

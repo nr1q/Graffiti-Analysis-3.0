@@ -9,8 +9,8 @@
 #define LOCK_HEIGHT 10
 #define LOCK_BORDER 3
 
-class guiTypePanel : public guiBaseObject{
-
+class guiTypePanel : public guiBaseObject
+{
     public:
 
         //------------------------------------------------
@@ -59,30 +59,30 @@ class guiTypePanel : public guiBaseObject{
             if(readOnly)return false;
             if( x >= hitArea.x && x <= hitArea.x + hitArea.width && y >= hitArea.y && y <= hitArea.y + hitArea.height){
                 state = SG_STATE_SELECTED;
-                
-				float xx = x - boundingBox.x;
+
+                                float xx = x - boundingBox.x;
                 float yy = y - boundingBox.y;
-				
-				if( xx  > lockRect.x && xx < lockRect.x + lockRect.width && yy > lockRect.y && yy < lockRect.y + lockRect.height ){
+
+                                if( xx  > lockRect.x && xx < lockRect.x + lockRect.width && yy > lockRect.y && yy < lockRect.y + lockRect.height ){
                     locked = !locked;
-                } 
-					
+                }
+
                 setSelected();
                 updateGui(x, y, true, isRelative);
-				
+
                 if( !locked ){
 
                     float offsetX = x - hitArea.x;
                     float offsetY = y - hitArea.y;
 
-                    for(int i = 0; i < children.size(); i++){
-                        
-						bool bHit = children[i]->checkHit(offsetX, offsetY, isRelative);
-						if( children[i]->dataType == SG_TYPE_STRING && !bHit )
-						{
-							children[i]->value.setValue(0);
-						}
-						
+                    for (unsigned i = 0; i < children.size(); i++){
+
+                                                bool bHit = children[i]->checkHit(offsetX, offsetY, isRelative);
+                                                if( children[i]->dataType == SG_TYPE_STRING && !bHit )
+                                                {
+                                                        children[i]->value.setValue(0);
+                                                }
+
                     }
                 }
                 return true;
@@ -107,7 +107,7 @@ class guiTypePanel : public guiBaseObject{
 
                 if( !locked ){
 
-                    for(int i = 0; i < children.size(); i++){
+                    for(unsigned i = 0; i < children.size(); i++){
                         children[i]->updateGui(offsetX, offsetY, firstHit, isRelative);
                     }
 
@@ -127,11 +127,11 @@ class guiTypePanel : public guiBaseObject{
             lockRect.width      = LOCK_WIDTH + LOCK_BORDER * 2;
             lockRect.height     = LOCK_HEIGHT + LOCK_BORDER * 2;
 
-            for(int i = 0; i < children.size(); i++){
+            for(unsigned i = 0; i < children.size(); i++){
                 children[i]->update();
             }
 
-            for(int i = 0; i < whichColumn.size(); i++){
+            for(unsigned i = 0; i < whichColumn.size(); i++){
                 if( children[i]->boundingBox.x != columns[whichColumn[i]].x ){
                     float amntToShiftX = columns[whichColumn[i]].x - children[i]->boundingBox.x;
 
@@ -143,11 +143,11 @@ class guiTypePanel : public guiBaseObject{
 
         //-----------------------------------------------
         void addElement( guiBaseObject * element, float spacingAmnt = -1 ){
-            
-			if(spacingAmnt < 0 ) spacingAmnt = spacingAmntY;
-			if(spacingAmnt!=spacingAmntY) cout << "spacing " << spacingAmnt << endl;
-			
-			element->updateText();
+
+                        if(spacingAmnt < 0 ) spacingAmnt = spacingAmntY;
+                        if(spacingAmnt!=spacingAmntY) cout << "spacing " << spacingAmnt << endl;
+
+                        element->updateText();
             element->setPosition(columns[col].x, columns[col].y);
             whichColumn.push_back(col);
 
@@ -156,14 +156,14 @@ class guiTypePanel : public guiBaseObject{
 
             //update the current position for the next element
             columns[col].y += element->getHeight() + spacingAmnt;
-			cout << element->name << " "  << element->getHeight() << endl;
-			
+            cout << element->name << " "  << element->getHeight() << endl;
+
             float checkWidth = element->getWidth();
             if(checkWidth >= columns[col].width ){
                 float amnt = checkWidth - columns[col].width;
                 columns[col].width += amnt;
 
-                for(int i = col+1; i < columns.size(); i++){
+                for(unsigned i = col+1; i < columns.size(); i++){
                     columns[i].x += amnt;
                 }
             }
@@ -180,18 +180,18 @@ class guiTypePanel : public guiBaseObject{
                 ofTranslate(lockRect.x, lockRect.y, 0);
 
                 ofSetColor(200, 0, 0);
-                ofRect(0, 0, lockRect.width, lockRect.height);
+                ofDrawRectangle(0, 0, lockRect.width, lockRect.height);
 
                 ofTranslate(LOCK_BORDER, LOCK_BORDER, 0);
 
                 ofSetColor(255, 255, 255);
-                ofEllipse(LOCK_WIDTH/2, LOCK_HEIGHT/2, LOCK_WIDTH * 0.8, LOCK_HEIGHT * 0.9);
+                ofDrawEllipse(LOCK_WIDTH/2, LOCK_HEIGHT/2, LOCK_WIDTH * 0.8, LOCK_HEIGHT * 0.9);
 
                 ofSetColor(200, 0, 0);
-                ofEllipse(LOCK_WIDTH/2, LOCK_HEIGHT/2, LOCK_WIDTH * 0.8 * 0.6, LOCK_HEIGHT * 0.9 * 0.6);
+                ofDrawEllipse(LOCK_WIDTH/2, LOCK_HEIGHT/2, LOCK_WIDTH * 0.8 * 0.6, LOCK_HEIGHT * 0.9 * 0.6);
 
                 ofSetColor(255, 255, 255);
-                ofRect(0, LOCK_HEIGHT/2, LOCK_WIDTH, LOCK_HEIGHT/2);
+                ofDrawRectangle(0, LOCK_HEIGHT/2, LOCK_WIDTH, LOCK_HEIGHT/2);
             ofPopMatrix();
         }
 
@@ -202,20 +202,20 @@ class guiTypePanel : public guiBaseObject{
                 ofTranslate(lockRect.x, lockRect.y, 0);
 
                 ofSetColor(0, 0, 0);
-                ofRect(0, 0, lockRect.width, lockRect.height);
+                ofDrawRectangle(0, 0, lockRect.width, lockRect.height);
 
                 ofTranslate(LOCK_BORDER, LOCK_BORDER, 0);
                 ofSetColor(255, 255, 255);
-                ofEllipse(LOCK_WIDTH/2, LOCK_HEIGHT * 0.4, LOCK_WIDTH * 0.8, LOCK_HEIGHT * 0.9);
+                ofDrawEllipse(LOCK_WIDTH/2, LOCK_HEIGHT * 0.4, LOCK_WIDTH * 0.8, LOCK_HEIGHT * 0.9);
 
                 ofSetColor(0, 0, 0);
-                ofEllipse(LOCK_WIDTH/2, LOCK_HEIGHT * 0.44, LOCK_WIDTH * 0.8 * 0.6, LOCK_HEIGHT * 0.9 * 0.6);
+                ofDrawEllipse(LOCK_WIDTH/2, LOCK_HEIGHT * 0.44, LOCK_WIDTH * 0.8 * 0.6, LOCK_HEIGHT * 0.9 * 0.6);
 
                 ofSetColor(255, 255, 255);
-                ofRect(0, LOCK_HEIGHT/2, LOCK_WIDTH, LOCK_HEIGHT/2);
+                ofDrawRectangle(0, LOCK_HEIGHT/2, LOCK_WIDTH, LOCK_HEIGHT/2);
 
                 ofSetColor(0, 0, 0);
-                ofRect(0, LOCK_HEIGHT * 0.5 - LOCK_HEIGHT * 0.25 , LOCK_WIDTH * 0.35, LOCK_HEIGHT * 0.25);
+                ofDrawRectangle(0, LOCK_HEIGHT * 0.5 - LOCK_HEIGHT * 0.25 , LOCK_WIDTH * 0.35, LOCK_HEIGHT * 0.25);
 
             ofPopMatrix();
         }
@@ -229,12 +229,12 @@ class guiTypePanel : public guiBaseObject{
                     //draw the background
                     ofFill();
                     glColor4fv(bgColor.getColorF());
-                    ofRect(0, 0, boundingBox.width, boundingBox.height);
+                    ofDrawRectangle(0, 0, boundingBox.width, boundingBox.height);
 
                     //draw the outline
                     ofNoFill();
                     glColor4fv(outlineColor.getColorF());
-                    ofRect(0, 0, boundingBox.width, boundingBox.height);
+                    ofDrawRectangle(0, 0, boundingBox.width, boundingBox.height);
 
                     /*if( locked ){
                         drawLocked();
@@ -247,7 +247,7 @@ class guiTypePanel : public guiBaseObject{
 
                 glPushMatrix();
                     glTranslatef(hitArea.x, hitArea.y, 0);
-                        for(int i = 0; i < children.size(); i++){
+                        for(unsigned i = 0; i < children.size(); i++){
                             children[i]->render();
                         }
                 glPopMatrix();

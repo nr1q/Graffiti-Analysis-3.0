@@ -7,19 +7,19 @@
  *
  */
 
+#pragma once
+
 #include "polySimple.h"
 #include "polyUtils.h"
 
-#pragma once
 
-class polyAdv : public polySimple{
-	
+class polyAdv : public polySimple
+{
 public:
-	
-	polyAdv();
-	~polyAdv();
-	polyAdv(  const polyAdv &  mom );
-	
-	virtual void createFromRect( ofRectangle rect );
-	virtual bool bHitTest( float x, float y);
+    polyAdv();
+    ~polyAdv();
+    polyAdv (const polyAdv & mom);
+
+    virtual void createFromRect (ofRectangle rect);
+    virtual bool bHitTest (float x, float y);
 };

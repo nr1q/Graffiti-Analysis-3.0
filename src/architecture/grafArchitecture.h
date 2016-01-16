@@ -18,19 +18,23 @@
 #include "ofxXmlSettings.h"
 #include "grafLineDrawer.h"
 
-enum{
-TOOL_TYPE_FREE_DRAW, TOOL_TYPE_LINE, TOOL_TYPE_RECT, TOOL_TYPE_CIRCLE, TOOL_TYPE_POLY
+enum {
+    TOOL_TYPE_FREE_DRAW,
+    TOOL_TYPE_LINE,
+    TOOL_TYPE_RECT,
+    TOOL_TYPE_CIRCLE,
+    TOOL_TYPE_POLY
 };
 
 #define PS_AT_A_TIME	100
 #define PS_TOTAL_ALIVE	300
- 
+
 class GrafArchitecture{
 
 	public:
 		GrafArchitecture();
 		~GrafArchitecture();
-		
+
 		void reset();
 		void clear();
 		void setup(int screenW = 1280, int screenH = 800);
@@ -38,19 +42,19 @@ class GrafArchitecture{
 		void draw();
 		void drawTool();
 		void drawTestImage();
-		
+
 		void saveToXML(string filename);
 		void loadFromXML(string filename);
-		
+
 		// create boxes uot of particles from particlesystem
 		void createParticleSet(particleSystem * PS);
 		void turnOnParticleBoxes(particleSystem * PS);
-		
+
 		// creates box2d elements from polygons in polygroup
 		void createArchitectureFromPolys(vector<polySimple>polys);
 
 		void setPhysicsParams(float mass, float bounce, float friction);
-		
+
 		//---- the world
 		ofxBox2d						box2d;			  //	the box2d world
 		ofPoint offSet,offSetPre;
@@ -61,34 +65,34 @@ class GrafArchitecture{
 
 		//---- box for each particle
 		vector		<GrafArchBox>		boxes;			  //	defalut box2d rects
-				
+
 		//---- box2d physics object of structure
-		vector<ofxBox2dLine>	drawLines;				// drawn lines (free or two points)
+		vector<ofxBox2dEdge>	drawLines;				// drawn lines (free or two points)
 		//vector<ofxBox2dPolygon> drawPolys;				// drawn polygons
 		//vector<ofxBox2dCircle>	drawCircles;			// drawn circles
-	
+
 		//---- display
 		bool bShowArchitecture;
-		
+
 		//---- drawing tool
 		bool bDrawingActive;
 		int  toolType;
 		polyGroup	pGroup;							// group of editable polygons for drawing
-		
+
 		//---- debug and testing options
 		ofImage			archImage;
 		bool			bUseTestImage;
-		
+
 		bool			bMadeAll;
 		bool			bPauseKill;
-		
+
 		int screenW, screenH, floorH;
-		
+
 		bool			bSetup;
-		
+
 	protected:
-	
+
 		float			boxBounce, boxFriction, boxMass;
-		
+
 
 };

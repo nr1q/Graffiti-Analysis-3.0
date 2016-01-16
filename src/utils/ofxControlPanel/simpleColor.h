@@ -1,11 +1,12 @@
 #pragma once
 
-class simpleColor{
-
+class simpleColor
+{
     public:
 
     //----------------------------------------------------------
-    simpleColor(){
+    simpleColor()
+    {
         r = 1.0;
         g = 1.0;
         b = 1.0;
@@ -13,7 +14,8 @@ class simpleColor{
     }
 
     //----------------------------------------------------------
-    void setColor(int _r, int _g, int _b, int _a){
+    void setColor (int _r, int _g, int _b, int _a)
+    {
         r = (float)_r / 255.0f; r = MAX(0,MIN(r,1.0f));
         g = (float)_g / 255.0f; g = MAX(0,MIN(g,1.0f));
         b = (float)_b / 255.0f; b = MAX(0,MIN(b,1.0f));
@@ -21,28 +23,30 @@ class simpleColor{
     }
 
     //----------------------------------------------------------
-    void setColor(int hexColor){
-        int r = (hexColor >> 24)& 0xff;
+    void setColor (int hexColor)
+    {
+        int r = (hexColor >> 24) & 0xff;
         int g = (hexColor >> 16) & 0xff;
-        int b = (hexColor >> 8) & 0xff;
-        int a = (hexColor >> 0) & 0xff;
+        int b = (hexColor >> 8)  & 0xff;
+        int a = (hexColor >> 0)  & 0xff;
 
         setColor(r, g, b, a);
     }
 
     //----------------------------------------------------------
-    simpleColor& getColor(){
+    simpleColor& getColor()
+    {
         return *this;
     }
 
     //----------------------------------------------------------
-    float * getColorF(){
+    float * getColorF()
+    {
         return color;
     }
 
     //------------------
-    //------------------
-    union  {
+    union {
         struct {
             float r;
             float g;
@@ -51,7 +55,4 @@ class simpleColor{
         };
         float color[4];
     };
-
 };
-
-

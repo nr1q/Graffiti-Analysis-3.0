@@ -7,7 +7,7 @@ class guiValue{
     public:
         guiValue();
 
-       //------------------------------------------------
+        //------------------------------------------------
         void addValue(float val, float _min, float _max);
 
         //------------------------------------------------
@@ -16,31 +16,31 @@ class guiValue{
         //------------------------------------------------
         void addValueB(bool val);
 
-		//------------------------------------------------
-		void addValueS(string val);
-		
-		//------------------------------------------------
+        //------------------------------------------------
+        void addValueS(string val);
+
+        //------------------------------------------------
         bool setValue(float val, unsigned int which = 0);
 
         //------------------------------------------------
         bool setValueAsPct(float percent, unsigned int which = 0);
 
-		//------------------------------------------------
-		bool setValueAsStr(string val, int which = 0);
-	   
-	   //------------------------------------------------
+        //------------------------------------------------
+        bool setValueAsStr(string val, int which = 0);
+
+        //------------------------------------------------
         float getValueF(unsigned int which = 0);
 
-       //------------------------------------------------
+        //------------------------------------------------
         float getValueI(unsigned int which = 0);
 
-       //------------------------------------------------
+        //------------------------------------------------
         float getValueB(unsigned int which = 0);
 
-		//------------------------------------------------
-		string getValueS(int which = 0);
-		
-		//------------------------------------------------
+        //------------------------------------------------
+        string getValueS(int which = 0);
+
+        //------------------------------------------------
         float getMin(unsigned int which = 0);
 
         //------------------------------------------------
@@ -49,11 +49,11 @@ class guiValue{
         //------------------------------------------------
         float getPct(unsigned int which = 0);
 
-        //------------------------------------------------		
-		bool hasValueChanged(unsigned int which = 0);
-		
-        //------------------------------------------------		
-		void clearChangedFlag();
+        //------------------------------------------------
+        bool hasValueChanged(unsigned int which = 0);
+
+        //------------------------------------------------
+        void clearChangedFlag();
 
         //------------------------------------------------
         int getNumValues();
@@ -68,13 +68,12 @@ class guiValue{
         vector <float> value;
         vector <float> valueI;
         vector <float> valueB;
-		vector <string> valueS;
+        vector <string> valueS;
 
         vector <float> min;
         vector <float> max;
         vector <float> pct;
 
-		vector<bool> bChanged;
-
+        vector<bool> bChanged;
 };
 

@@ -1,37 +1,39 @@
 #pragma once
 
-
-
 #include "guiColor.h"
 #include "simpleColor.h"
-#include "guiValue.h"
+//#include "guiValue.h"
 
-class guiTextBase{
-
+class guiTextBase
+{
     public:
-
         //-------------------------------------------
-        guiTextBase(){
-            textString = "";
-            bRealFont  = false;
-            fontSize   = 13;
+        guiTextBase()
+        {
+            textString  = "";
+            bRealFont   = false;
+            fontSize    = 13;
             numNewLines = 0;
 
-            ourFont = NULL;
+            ourFont     = NULL;
         }
 
         //we should also have an option to load a font once
         //then just pass a reference to the ofTTF font object
         //--------------------------------------------
-        virtual void setFont(ofTrueTypeFont * fontPtr){
-            if( fontPtr != NULL && fontPtr->bLoadedOk ){
+        virtual void setFont (ofTrueTypeFont * fontPtr)
+        {
+            if (fontPtr != NULL && fontPtr->isLoaded()) {
                 ourFont = fontPtr;
                 bRealFont = true;
-            }else bRealFont = false;
+            } else {
+                bRealFont = false;
+            }
         }
 
         //--------------------------------------------
-        virtual float getTextWidth(){
+        virtual float getTextWidth()
+        {
             float textWidth = 0;
 
             if(bRealFont)textWidth = ourFont->stringWidth(textString);
@@ -65,7 +67,7 @@ class guiTextBase{
             textString = textStr;
 
             numNewLines = 0;
-            for(int i = 0; i < textString.size(); i++){
+            for(unsigned i = 0; i < textString.size(); i++){
                 if( textString[i] == '\n' )numNewLines++;
             }
 
@@ -96,7 +98,7 @@ class guiTextBase{
             if(bRealFont)textHeight = ourFont->stringHeight(textToRender);
             else{
                 int numLines = 0;
-                for(int i = 0; i < textToRender.size(); i++){
+                for(unsigned i = 0; i < textToRender.size(); i++){
                     if( textToRender[i] == '\n' )numLines++;
                 }
                 textHeight = fontSize + fontSize * numLines;

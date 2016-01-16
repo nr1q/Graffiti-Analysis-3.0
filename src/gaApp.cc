@@ -13,7 +13,7 @@ void gaApp::setup()
 //--------------------------------------------------------------
 void gaApp::update()
 {
-    switch( manager.mode ) {
+    switch (manager.mode) {
         case GA_MODE_START:
             manager.update();
             break;
@@ -31,7 +31,7 @@ void gaApp::update()
 //--------------------------------------------------------------
 void gaApp::draw()
 {
-    switch( manager.mode ) {
+    switch (manager.mode) {
         case GA_MODE_START:
             manager.draw();
             break;
@@ -59,9 +59,9 @@ void gaApp::keyPressed(int key)
         //case OF_KEY_F2:
             //manager.setMode( GA_MODE_RECORDER );
             //break;
-        //case OF_KEY_F3:
-            //manager.setMode( GA_MODE_PLAYER );
-            //break;
+        case OF_KEY_F3:
+            manager.setMode( GA_MODE_PLAYER );
+            break;
         //case OF_KEY_F4:
             //manager.setMode( GA_MODE_LASER );
             //break;
@@ -70,7 +70,7 @@ void gaApp::keyPressed(int key)
     if (! gaInteractiveApp.panel.isAnyTextBoxActive() ||
         manager.mode != GA_MODE_PLAYER
     ) {
-        if ( key == 'f' || key == 'F' ) ofToggleFullscreen();
+        if (key == 'f' || key == 'F') ofToggleFullscreen();
     }
 }
 
