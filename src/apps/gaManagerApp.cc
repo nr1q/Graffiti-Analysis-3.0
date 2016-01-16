@@ -14,9 +14,9 @@ GaManagerApp::GaManagerApp()
 {
     mode = GA_MODE_START;
 
-    titleImage.load( "images/title_bg3.png" );
-    fontS.load( "fonts/frabk.ttf", 12 );
-    fontSS.load( "fonts/frabk.ttf", 10 );
+    titleImage.load("images/title_bg3.png");
+    fontS.load("fonts/frabk.ttf", 12);
+    fontSS.load("fonts/frabk.ttf", 10);
 
     bSetSplashTag = false;
     tModes = 2;
@@ -40,7 +40,7 @@ void GaManagerApp::setup()
     polyEditable polyTemp;
 
     for (int i = 0; i < 3; i++) {
-        polyButtons.push_back( polyTemp );
+        polyButtons.push_back(polyTemp);
 
         polyButtons[i].pushVertex( ofVec3f(xp, yp+0) );
         polyButtons[i].pushVertex( ofVec3f(xp+380, yp+0) );
@@ -50,7 +50,7 @@ void GaManagerApp::setup()
         yp += 40;
     }
 
-    gIO.loadTag( "settings/she-04.gml", &tag );
+    gIO.loadTag("settings/she-04.gml", &tag);
     particleDrawer.setup( ofGetWidth(), ofGetHeight() );
 
     rotationY               = 0;
@@ -65,7 +65,7 @@ void GaManagerApp::setup()
     if (bSetSplashTag) {
         smoother.smoothTag(4, &tag);
         tag.average();
-        tag.average();
+        //tag.average();
     }
 }
 
@@ -74,8 +74,8 @@ float lastTime = 0;
 
 void GaManagerApp::update()
 {
-    float dt  = ofGetElapsedTimef()-lastTime;
-    lastTime  = ofGetElapsedTimef();
+    float dt = ofGetElapsedTimef() - lastTime;
+    lastTime = ofGetElapsedTimef();
 
     if (bSetSplashTag) {
         drawer.setup( &tag, tag.distMax );
@@ -86,7 +86,11 @@ void GaManagerApp::update()
 
         rotationY += dt;
 
-        particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tag),  dt,  myTagPlayer.bReset, tag.center.z);
+        particleDrawer.update(myTagPlayer.getCurrentPoint(),
+                              myTagPlayer.getVelocityForTime(&tag),
+                              dt,
+                              myTagPlayer.bReset,
+                              tag.center.z);
         //particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tag),  dt, myTagPlayer.bReset);
         myTagPlayer.bReset = false;
     }
@@ -95,8 +99,7 @@ void GaManagerApp::update()
 //--------------------------------------------------------------
 void GaManagerApp::draw()
 {
-    if (screenW != ofGetWidth())
-    {
+    if (screenW != ofGetWidth()) {
         int diffX = ofGetWidth() - screenW;
         for (int i = 0; i < 3; i++)
             polyButtons[i].moveAllPointsBy( ofVec3f(diffX, 0) );
@@ -109,20 +112,20 @@ void GaManagerApp::draw()
         glPushMatrix();
             glTranslatef(tag.position.x,tag.position.y, 0);
             glTranslatef(ofGetWidth()/2.f, ofGetHeight()/2.f, 0);
-            glScalef(tag.position.z,tag.position.z,tag.position.z);
-            glRotatef(tag.rotation.x,1,0,0);
-            glRotatef(tag.rotation.y+rotationY,0,1,0);
-            glRotatef(tag.rotation.z,0,0,1);
+            glScalef(tag.position.z, tag.position.z, tag.position.z);
+            glRotatef(tag.rotation.x, 1, 0, 0);
+            glRotatef(tag.rotation.y + rotationY, 0, 1, 0);
+            glRotatef(tag.rotation.z, 0, 0, 1);
 
-            glTranslatef(-tag.min.x*tag.drawScale,-tag.min.y*tag.drawScale,-tag.min.z);
-            glTranslatef(-tag.center.x*tag.drawScale,-tag.center.y*tag.drawScale,-tag.center.z);
+            glTranslatef(-tag.min.x * tag.drawScale, -tag.min.y * tag.drawScale, -tag.min.z);
+            glTranslatef(-tag.center.x * tag.drawScale, -tag.center.y * tag.drawScale, -tag.center.z);
 
             glDisable(GL_DEPTH_TEST);
-            particleDrawer.draw(myTagPlayer.getCurrentPoint().z,  ofGetWidth(),  ofGetHeight());
+            particleDrawer.draw(myTagPlayer.getCurrentPoint().z, ofGetWidth(), ofGetHeight());
             glEnable(GL_DEPTH_TEST);
 
             glPushMatrix();
-                glScalef( tag.drawScale, tag.drawScale, 1);
+                glScalef(tag.drawScale, tag.drawScale, 1);
                 drawer.draw( myTagPlayer.getCurrentStroke(), myTagPlayer.getCurrentId() );
             glPopMatrix();
         glPopMatrix();
@@ -136,27 +139,26 @@ void GaManagerApp::draw()
     ofEnableAlphaBlending();
 
     ofFill();
-    ofSetColor( 0, 0, 0, 220 );
-    ofDrawRectangle( xp, -10, 380, ofGetHeight() + 20 );
+    ofSetColor(0, 0, 0, 220);
+    ofDrawRectangle(xp, -10, 380, ofGetHeight()+20);
 
     ofNoFill();
-    ofSetColor( 100, 100, 100 );
-    ofDrawRectangle( xp, -10, 380, ofGetHeight() + 20 );
+    ofSetColor(100, 100, 100);
+    ofDrawRectangle(xp, -10, 380, ofGetHeight()+20);
 
     xp += 20;
 
     ofSetColor(255, 255, 255);
-    titleImage.draw( xp - 3, yp );
+    titleImage.draw(xp-3, yp);
 
     yp += titleImage.getHeight() + 40;
 
-    fontSS.drawString("Graffiti Analysis 3.0 by Evan Roth.",xp,yp);
-    fontSS.drawString("Software development by Chris Sugrue.",xp,yp+=20);
-    fontSS.drawString("Laser input integration by Theo Watson.",xp,yp+=20);
-    fontSS.drawString("Complies with all <GML> standards.",xp,yp+=20);
-    fontSS.drawString("GNU General Public License.",xp,yp+=20);
+    fontSS.drawString("Graffiti Analysis 3.0 by Evan Roth.", xp, yp);
+    fontSS.drawString("Software development by Chris Sugrue.", xp, yp+=20);
+    fontSS.drawString("Laser input integration by Theo Watson.", xp, yp+=20);
+    fontSS.drawString("Complies with all <GML> standards.", xp, yp+=20);
+    fontSS.drawString("GNU General Public License.", xp, yp+=20);
     fontSS.drawString("graffitianalysis.com", xp, yp+=30);
-
 
     yp += 90;
     fontSS.drawString("LAUNCH", xp, yp);
@@ -165,8 +167,8 @@ void GaManagerApp::draw()
     fontSS.drawString("LAUNCH", xp, yp+=40);
     fontS.drawString("LASER INPUT ", xp+60, yp);
 
-    //fontSS.drawString("LAUNCH", xp, yp+80);
-    //fontS.drawString("RECORDER", xp+60, yp+80);
+    fontSS.drawString("LAUNCH", xp, yp+80);
+    fontS.drawString("RECORDER", xp+60, yp+80);
 
     //for (int i = 0; i < tModes; i++) polyButtons[i].draw();
 

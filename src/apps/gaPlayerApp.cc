@@ -1,12 +1,10 @@
 #include "gaPlayerApp.h"
 
-
 //--------------------------------------------------------------
 GaPlayerApp::GaPlayerApp()
 {
     bSetup = false;
 }
-
 
 GaPlayerApp::~GaPlayerApp()
 {
@@ -18,122 +16,119 @@ GaPlayerApp::~GaPlayerApp()
     ofRemoveListener( ofEvents().keyReleased,   this, &GaPlayerApp::keyReleased );
 }
 
-
 //--------------------------------------------------------------
 void GaPlayerApp::setup()
 {
-        ofxXmlSettings xmlUser;
-        xmlUser.loadFile("appSettings.xml");
-        string username = xmlUser.getValue("project_folder", "default");
+    ofxXmlSettings xmlUser;
+    xmlUser.loadFile("appSettings.xml");
+    string username = xmlUser.getValue("project_folder", "default");
 
-        pathToSettings = "projects/"+username+"/settings/";//"settings/default/";
-        myTagDirectory = "projects/"+username+"/tags/";
+    pathToSettings = "projects/"+username+"/settings/";//"settings/default/";
+    myTagDirectory = "projects/"+username+"/tags/";
 
-        ofAddListener( ofEvents().mouseMoved,    this, &GaPlayerApp::mouseMoved );
-        ofAddListener( ofEvents().mousePressed,  this, &GaPlayerApp::mousePressed );
-        ofAddListener( ofEvents().mouseReleased, this, &GaPlayerApp::mouseReleased );
-        ofAddListener( ofEvents().mouseDragged,  this, &GaPlayerApp::mouseDragged );
-        ofAddListener( ofEvents().keyPressed,    this, &GaPlayerApp::keyPressed );
-        ofAddListener( ofEvents().keyReleased,   this, &GaPlayerApp::keyReleased );
+    ofAddListener( ofEvents().mouseMoved,    this, &GaPlayerApp::mouseMoved );
+    ofAddListener( ofEvents().mousePressed,  this, &GaPlayerApp::mousePressed );
+    ofAddListener( ofEvents().mouseReleased, this, &GaPlayerApp::mouseReleased );
+    ofAddListener( ofEvents().mouseDragged,  this, &GaPlayerApp::mouseDragged );
+    ofAddListener( ofEvents().keyPressed,    this, &GaPlayerApp::keyPressed );
+    ofAddListener( ofEvents().keyReleased,   this, &GaPlayerApp::keyReleased );
 
-        screenW          = ofGetWidth();
-        screenH          = ofGetHeight();
+    screenW          = ofGetWidth();
+    screenH          = ofGetHeight();
 
-        mode             = PLAY_MODE_LOAD;
-        lastX            = 0;
-        lastY            = 0;
-        bShowPanel       = true;
-        bRotating        = false;
-        bShowName        = false;
-        bShowTime        = false;
-        bUseFog          = true;
-        bUseMask         = true;
-        bTakeScreenShot  = false;
-        bUseGravity      = true;
-        bUseAudio        = true;
-        bUseArchitecture = true;
-        modeRender       = GA_RMODE_NORMAL;
-        modeDualScreen   = GA_SCREENS_NORMAL;
+    mode             = PLAY_MODE_LOAD;
+    lastX            = 0;
+    lastY            = 0;
+    bShowPanel       = true;
+    bRotating        = false;
+    bShowName        = false;
+    bShowTime        = false;
+    bUseFog          = true;
+    bUseMask         = true;
+    bTakeScreenShot  = false;
+    bUseGravity      = true;
+    bUseAudio        = true;
+    bUseArchitecture = true;
+    modeRender       = GA_RMODE_NORMAL;
+    modeDualScreen   = GA_SCREENS_NORMAL;
 
-        prevStroke   = 0;
-        currentTagID = 0;
-        waitTime     = 2.f;
-        waitTimer    = waitTime;
-        rotationY    = -45;
-        tagMoveForce = .1;
-        tagPosVel.set(0, 0, 0);
-        z_const      = 16;
-        bUseGlobalZ  = false;
-        lastUpdatedZ = -1;
+    prevStroke       = 0;
+    currentTagID     = 0;
+    waitTime         = 2.f;
+    waitTimer        = waitTime;
+    rotationY        = -45;
+    tagMoveForce     = .1;
+    tagPosVel.set(0, 0, 0);
+    z_const          = 16;
+    bUseGlobalZ      = false;
+    lastUpdatedZ     = -1;
 
-        fontSS.load("fonts/frabk.ttf",9);
-        fontS.load("fonts/frabk.ttf",14);
-        fontL.load("fonts/frabk.ttf",22);
-        imageMask.load("images/mask.jpg");
+    fontSS.load("fonts/frabk.ttf",9);
+    fontS.load("fonts/frabk.ttf",14);
+    fontL.load("fonts/frabk.ttf",22);
+    imageMask.load("images/mask.jpg");
 
-        float FogCol[3] = {0, 0, 0};
-        glFogfv( GL_FOG_COLOR, FogCol );
-        glFogi( GL_FOG_MODE, GL_LINEAR );
-        glFogf( GL_FOG_DENSITY, 0.05f );
-        fogStart = 370;
-        fogEnd   = 970;
+    float FogCol[3] = {0, 0, 0};
+    glFogfv( GL_FOG_COLOR, FogCol );
+    glFogi( GL_FOG_MODE, GL_LINEAR );
+    glFogf( GL_FOG_DENSITY, 0.05f );
+    fogStart = 370;
+    fogEnd   = 970;
 
-        // controls
-        setupControlPanel();
-        updateControlPanel();
+    // controls
+    setupControlPanel();
+    updateControlPanel();
 
-        if (panel.getValueB("use_rb"))
-            modeRender = GA_RMODE_RB;
+    if (panel.getValueB("use_rb"))
+        modeRender = GA_RMODE_RB;
 
-        particleDrawer.setup(screenW, screenH);
+    particleDrawer.setup(screenW, screenH);
 
-        // fbo
-        #ifdef GA_STACK_SCREENS
-            fbo.allocate(screenW*2, screenH*2);
-        #else
-            fbo.allocate(screenW, screenH);
-        #endif
+    // fbo
+    #ifdef GA_STACK_SCREENS
+        fbo.allocate(screenW*2, screenH*2);
+    #else
+        fbo.allocate(screenW, screenH);
+    #endif
 
-        pWarper.initWarp( screenW,screenH,screenW*WARP_DIV,screenH*WARP_DIV );
-        pWarper.recalculateWarp();
-        pWarper.loadFromXml(pathToSettings+"warper.xml");
+    pWarper.initWarp( screenW, screenH, screenW * WARP_DIV, screenH * WARP_DIV );
+    pWarper.recalculateWarp();
+    pWarper.loadFromXml(pathToSettings+"warper.xml");
 
-        //// audio
-        //audio.setup();
+    //// audio
+    //audio.setup();
 
-        #ifdef GA_STACK_SCREENS
-            archPhysics.setup(screenW, screenH);
-            archPhysics.floorH = screenH * 2;
-        #else
-            archPhysics.setup(screenW, screenH);
-        #endif
+    #ifdef GA_STACK_SCREENS
+        archPhysics.setup(screenW, screenH);
+        archPhysics.floorH = screenH * 2;
+    #else
+        archPhysics.setup(screenW, screenH);
+    #endif
 
-        archPDropTime = 0;
+    archPDropTime = 0;
 
-        if (bUseArchitecture) {
-            archPhysics.archImage.loadImage(pathToSettings+"arch.jpg");
-            archPhysics.loadFromXML(pathToSettings+"architecture.xml");
-            createWarpedArchitecture();
-        }
+    if (bUseArchitecture) {
+        archPhysics.archImage.loadImage(pathToSettings+"arch.jpg");
+        archPhysics.loadFromXML(pathToSettings+"architecture.xml");
+        createWarpedArchitecture();
+    }
 
-        // red blue stuff
-        //fboLeft.allocate(screenW,screenH );
-        //fboRight.allocate(screenW,screenH );
+    // red blue stuff
+    //fboLeft.allocate(screenW,screenH );
+    //fboRight.allocate(screenW,screenH );
 
-        loadStatus = "No tags loaded.";
-        if (panel.getValueB("AUTO_LOAD")) {
-            preLoadTags(0);
-        }
+    loadStatus = "No tags loaded.";
+    if (panel.getValueB("AUTO_LOAD"))
+        preLoadTags(0);
 
-        bSetup = true;
+    bSetup = true;
 
-        gIO.setup("0","Graffiti Analysis","3.0");
+    gIO.setup("0","Graffiti Analysis","3.0");
 }
 
-
+//--------------------------------------------------------------
 static float lastTime = 0.f;
 
-//--------------------------------------------------------------
 void GaPlayerApp::update()
 {
     dt = ofGetElapsedTimef() - lastTime;
@@ -154,28 +149,28 @@ void GaPlayerApp::update()
             myTagPlayer.update( &tags[currentTagID] ); // normal play, update tag
         } else if (! myTagPlayer.bPaused && myTagPlayer.bDonePlaying && waitTimer > 0) {
             waitTimer -= dt; // pause time after drawn, before fades out
-        } else if ( !myTagPlayer.bPaused && myTagPlayer.bDonePlaying && (drawer.alpha > 0 || particleDrawer.alpha > 0)) {
+        } else if (! myTagPlayer.bPaused &&
+                   myTagPlayer.bDonePlaying &&
+                   (drawer.alpha > 0 || particleDrawer.alpha > 0)
+        ) {
             updateTransition(0);
             bTrans = true;
-        } else if (  !myTagPlayer.bPaused && myTagPlayer.bDonePlaying ) {
-            resetPlayer(1);       // setup for next tag
+        } else if (! myTagPlayer.bPaused && myTagPlayer.bDonePlaying) {
+            resetPlayer(1); // setup for next tag
         }
-
 
         ////---------- AUDIO applied
         //if( bUseAudio) updateAudio();
 
-
         //--------- ARCHITECTURE
         if (bUseArchitecture) updateArchitecture();
-
 
         //--------- PARTICLES
         updateParticles();
 
-
         //--------- TAG ROTATION + POSITION
-        if (bRotating && !myTagPlayer.bPaused) rotationY += panel.getValueF("ROT_SPEED")*dt;
+        if (bRotating && !myTagPlayer.bPaused)
+            rotationY += panel.getValueF("ROT_SPEED")*dt;
 
         // update pos / vel
         tags[currentTagID].position.x += tagPosVel.x;
@@ -194,7 +189,6 @@ void GaPlayerApp::update()
     if (bShowPanel) updateControlPanel();
 }
 
-
 void GaPlayerApp::updateParticles()
 {
     int lastStroke = myTagPlayer.getCurrentStroke();
@@ -202,9 +196,9 @@ void GaPlayerApp::updateParticles()
 
     if (prevStroke != lastStroke)
         myTagPlayer.bReset = true;
-    if (lastPoint <= 0 )
+    if (lastPoint <= 0)
         myTagPlayer.bReset = true;
-    if (tags[currentTagID].myStrokes[ lastStroke].pts.size()-1 == (unsigned)lastPoint)
+    if (tags[ currentTagID ].myStrokes[ lastStroke ].pts.size()-1 == (unsigned)lastPoint)
         myTagPlayer.bReset = true;
 
     particleDrawer.update(
@@ -238,8 +232,6 @@ void GaPlayerApp::updateTransition (int type)
             //if( panel.getValueB("use_bounce") ) drawer.transitionBounce( dt,audio.averageVal*bounce_frc);
             //if( drawer.pctTransLine < .1 ) drawer.pctTransLine += .001;
         //}
-
-
 
         if (bUseArchitecture) {
             if (drawer.prelimTransTime > panel.getValueI("wait_time")) {

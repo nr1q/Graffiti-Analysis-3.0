@@ -34,9 +34,9 @@ class GaManagerApp
         void update();
         void draw();
 
-        void setMode (int);
+        void setMode(int);
         int getMode();
-        int hitTest (int x, int y);
+        int hitTest(int x, int y);
 
         int mode;
 
@@ -48,14 +48,14 @@ class GaManagerApp
         vector<polyEditable> polyButtons;
         int                  xp, yp;
 
-        grafTagMulti       tag;
-        grafIO             gIO;            // gml loader/saver
-        grafPlayer         myTagPlayer;    // manages playback of tag in time
-        grafCurveSmoother  smoother;       // adds points to smooth tag
-        grafDrawer         drawer;         // draws thick time stroked line
-        grafVParticleField particleDrawer; // draws and animates particles
-        float rotationY;                   // y rotation for current tag
-        int   screenW, screenH;
-        int   tModes;
-        bool  bSetSplashTag;
+        grafTagMulti         tag;
+        grafIO               gIO;            // gml loader/saver
+        grafPlayer           myTagPlayer;    // manages playback of tag in time
+        grafCurveSmoother    smoother;       // adds points to smooth tag
+        grafDrawer           drawer;         // draws thick time stroked line
+        grafVParticleField   particleDrawer; // draws and animates particles
+        float                rotationY;      // y rotation for current tag
+        int                  screenW, screenH;
+        int                  tModes;
+        bool                 bSetSplashTag;
 };

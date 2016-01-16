@@ -1,6 +1,4 @@
-#ifndef _GRAF_PLAYER_APP
-#define _GRAF_PLAYER_APP
-
+#pragma once
 
 #include "ofMain.h"
 #include "grafTagMulti.h"
@@ -13,7 +11,6 @@
 #include "ofxControlPanel.h"
 #include "ofxXmlSettings.h"
 #include "ofThreadedImage.h"
-//#include "ofxFBOTexture.h"
 
 //#include "audioAnalyzer.h"
 //#include "dropParticles.h"
@@ -106,8 +103,8 @@ class GaPlayerApp
         //ofxFBOTexture         fboRight;
 
         //---------- interactive architecture
-        GrafArchitecture       archPhysics;            // physics / architecture effects
         void createWarpedArchitecture();
+        GrafArchitecture       archPhysics;     // physics / architecture effects
         vector<polySimple>     wPolys;
         float                  archPDropTime;
 
@@ -154,24 +151,24 @@ class GaPlayerApp
         float                  lastX, lastY;
         //ofxThreadedImageSaver imgsaver;
         ofImage                imageMask;
-        float                  dt;            // difference time
-        float                  waitTimer;     // counter to pause after animation finished
-        float                  waitTime;      // time to pause
+        float                  dt;              // difference time
+        float                  waitTimer;       // counter to pause after animation finished
+        float                  waitTime;        // time to pause
 
         //---------- controls
         guiTypeTextInput* rssTextBox;
-        bool              bShowPanel;        // toggle panel on/off
-        bool              bRotating;         // toggle auto rotation on/off
-        bool              bShowName;         // toggle filename display
-        bool              bShowTime;         // toggle time display
-        bool              bUseFog;           // toggle fog
-        bool              bUseMask;          // toggle edge masking
+        bool              bShowPanel;           // toggle panel on/off
+        bool              bRotating;            // toggle auto rotation on/off
+        bool              bShowName;            // toggle filename display
+        bool              bShowTime;            // toggle time display
+        bool              bUseFog;              // toggle fog
+        bool              bUseMask;             // toggle edge masking
         bool              bTakeScreenShot;
         bool              bUseGravity;
 
-        int               mode;              // current play mode PLAY_MODE_LOAD for loading, PLAY_MODE_PLAY for normal playback
+        int               mode;                 // current play mode PLAY_MODE_LOAD for loading, PLAY_MODE_PLAY for normal playback
 
-        string pathToSettings;               // path to files
+        string pathToSettings;                  // path to files
 
         //------------------------ alternate draw modes
         int  modeRender;        // GA_RMODE_NORMAL, GA_RMODE_RB (red-blue stereo)
@@ -286,5 +283,3 @@ Screen dimensions can be changed in screenSettings.xml, found in settings of cur
 data > projects > default > settings > screenSettings.xml
 
 -------------------------*/
-
-#endif
