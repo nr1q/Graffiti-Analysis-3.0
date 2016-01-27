@@ -320,7 +320,8 @@ void grafTagMulti::mousePressed (ofMouseEventArgs& event)
     if (!bMouseActive) return;
 
     // TODO fix this using GLFW
-    std::cout << window << std::endl;
+    std::cout << "implement GLFW" << std::endl;
+    //std::cout << window << std::endl;
     //int modifier = glutGetModifiers();
     //if( modifier == GLUT_ACTIVE_SHIFT) bShift = true;
     //else bShift = false;

@@ -173,6 +173,7 @@ void polyGroup::mousePressed (ofMouseEventArgs& event)
     disableAll();
 
     // TODO Implement GLFW for key modifiers from here…
+    std::cout << "implement GLFW" << std::endl;
     ////--- check shift key
     //int modifier = glutGetModifiers();
 

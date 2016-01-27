@@ -412,7 +412,7 @@ void GaPlayerApp::drawTagNormal()
         if (bUseMask) {
             ofEnableAlphaBlending();
             glBlendFunc(GL_DST_COLOR, GL_ZERO);
-            imageMask.draw(0,0,screenW,screenH);
+            imageMask.draw(0, 0, screenW, screenH);
         }
 
 

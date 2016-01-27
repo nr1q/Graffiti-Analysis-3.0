@@ -96,11 +96,9 @@ class GaPlayerApp
         ofFbo                 fbo;
         PerspectiveWarper     pWarper;
 
-        ////---------- FBO Red Blue Version
+        //---------- FBO Red Blue Version
         ofFbo                 fboLeft;
         ofFbo                 fboRight;
-        //ofxFBOTexture         fboLeft;
-        //ofxFBOTexture         fboRight;
 
         //---------- interactive architecture
         void createWarpedArchitecture();

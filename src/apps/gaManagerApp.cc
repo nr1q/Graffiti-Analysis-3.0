@@ -160,15 +160,14 @@ void GaManagerApp::draw()
     fontSS.drawString("GNU General Public License.", xp, yp+=20);
     fontSS.drawString("graffitianalysis.com", xp, yp+=30);
 
-    yp += 90;
-    fontSS.drawString("LAUNCH", xp, yp);
+    fontSS.drawString("LAUNCH", xp, yp+=90);
     fontS.drawString("PLAYBACK", xp+60, yp);
 
     fontSS.drawString("LAUNCH", xp, yp+=40);
-    fontS.drawString("LASER INPUT ", xp+60, yp);
+    fontS.drawString("LASER INPUT", xp+60, yp);
 
-    fontSS.drawString("LAUNCH", xp, yp+80);
-    fontS.drawString("RECORDER", xp+60, yp+80);
+    //fontSS.drawString("LAUNCH", xp, yp+=40);
+    //fontS.drawString("RECORDER", xp+60, yp);
 
     //for (int i = 0; i < tModes; i++) polyButtons[i].draw();
 
@@ -196,7 +195,7 @@ int GaManagerApp::hitTest (int x, int y)
         return GA_MODE_PLAYER;
     //else if (polyButtons[1].bHitTest(x,y))
         //return GA_MODE_LASER;
-    //else if( polyButtons[2].bHitTest(x,y) )
+    //else if (polyButtons[2].bHitTest(x,y))
         //return GA_MODE_RECORDER;
 
     return -1;
