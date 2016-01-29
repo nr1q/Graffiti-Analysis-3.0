@@ -29,10 +29,10 @@ void gaApp::update()
                 gaInteractiveApp.update();
             break;
         case GA_MODE_LASER:
-            //if (! gaLaserApp.bSetup)
-                //gaLaserApp.setup();
-            //else
-                //gaLaserApp.update();
+            if (! gaLaserApp.bSetup)
+                gaLaserApp.setup();
+            else
+                gaLaserApp.update();
             break;
     }
 
@@ -57,12 +57,12 @@ void gaApp::draw()
                 gaInteractiveApp.draw();
             break;
         case GA_MODE_LASER:
-            //if (gaLaserApp.bSetup)
-                //gaLaserApp.draw();
-                glPushMatrix();
-                    glTranslatef(ofGetWidth()/2,ofGetHeight()/2,0);
-                    ofDrawBitmapString("Laser Tag: Not ready yet.", 0, 0);
-                glPopMatrix();
+            if (gaLaserApp.bSetup)
+                gaLaserApp.draw();
+                //glPushMatrix();
+                    //glTranslatef(ofGetWidth()/2,ofGetHeight()/2,0);
+                    //ofDrawBitmapString("Laser Tag: Not ready yet.", 0, 0);
+                //glPopMatrix();
             break;
     }
 }

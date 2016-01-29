@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "gaManagerApp.h"
 #include "gaPlayerApp.h"
-//#include "gaLaserApp.h"
+#include "gaLaserApp.h"
 
 class gaApp : public ofBaseApp
 {
@@ -26,7 +26,7 @@ class gaApp : public ofBaseApp
 
         GaManagerApp       manager;
         GaPlayerApp        gaInteractiveApp;
-        //GaLaserApp         gaLaserApp;
+        GaLaserApp         gaLaserApp;
 
         bool bMouseVisible;
 };

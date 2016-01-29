@@ -1,7 +1,7 @@
 #include "colorManager.h"
 
-static long ConvertHexStrToLong( char* s )   
-{ 
+static long ConvertHexStrToLong( char* s )
+{
     int hexDigit[] = { 10, 11, 12, 13, 14, 15 };
     long n = 0;
     char c = *s++;
@@ -27,21 +27,21 @@ colorManager::colorManager(){
 	loaded = false;
 	numColors = 0;
 	current = 0;
-	
+
 	xmlSettings.setVerbose(false);
 }
 
 //----------------------------------------------------
 void colorManager::loadColorSettings(string filePath){
 	filePath = ofToDataPath(filePath);
-	
+
 	xmlSettings.loadFile(filePath);
-	buildColorTable();	
+	buildColorTable();
 }
 
 //----------------------------------------------------
 void colorManager::buildColorTable(){
-	
+
 	string str = "COLOR";
 	string hexStr = "";
 	for(int i = 0; i < MAX_COLORS; i++){
@@ -49,11 +49,11 @@ void colorManager::buildColorTable(){
 		if(hexStr == "NONE"){
 			continue;
 		}
-		
+
 		hex[numColors] = (int)ConvertHexStrToLong((char *)hexStr.c_str());
 		numColors++;
 	}
-	
+
 	if(numColors > 0)loaded = true;
 }
 
@@ -62,21 +62,21 @@ void colorManager::setCurrentColor(int which){
 	if(which < 0)which = 0;
 	if(which >= numColors)which = numColors;
 	current = which;
-	
+
 	int value = hex[current];
-	
+
 	int r = (value >> 16) & 0xff;
 	int g = (value >> 8) & 0xff;
 	int b = (value >> 0) & 0xff;
-	
+
 	charArr[0] = r;
 	charArr[1] = g;
 	charArr[2] = b;
-	
+
 	floatArr[0] = (float)r / 255;
 	floatArr[1] = (float)g / 255;
 	floatArr[2] = (float)b / 255;
-	
+
 }
 
 //----------------------------------------------------
@@ -119,7 +119,7 @@ unsigned char colorManager::getRedI(){
 //----------------------------------------------------
 unsigned char colorManager::getGreenI(){
 	return charArr[1];
-}		
+}
 
 //----------------------------------------------------
 unsigned char colorManager::getBlueI(){
@@ -155,28 +155,28 @@ void colorManager::drawCurrentColor(int x, int y, int w, int h){
 
 //----------------------------------------------------
 void colorManager::drawColorPanel(int x, int y, int w, int h, int num){
-				
+
 	if(num < 2 ) num = 2;
-	
+
 	float shift = 0;
 	float step 	= (float)w / (float)num;
-	
+
 	for(int i = 0; i < num; i++){
 		int pos = current + i;
 		if( pos < 0 || pos >= numColors ) continue;
-		
+
 		if(pos == current) ofSetColor(0x777777);
 		else ofSetColor(0x00000);
 		ofFill();
 		ofRect(x + shift,y,step,h);
-		
+
 		ofSetColor(	hex[pos] );
 
 		ofFill();
 		ofRect( 4 + x + shift, 4 + y,step - 8,h - 8);
-										
+
 		shift += step;
 	}
 
 }
-	
+
