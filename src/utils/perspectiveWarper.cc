@@ -123,13 +123,13 @@ void PerspectiveWarper::recalculateWarp()
 	}
 	if ( invert )
 	{
-		cvWarpPerspectiveQMatrix( cvdst, cvsrc, warp_translate );  // calculate homography
-		cvWarpPerspectiveQMatrix( cvsrc, cvdst, warp_translate_inv );
+		//cvWarpPerspectiveQMatrix( cvdst, cvsrc, warp_translate );  // calculate homography
+		//cvWarpPerspectiveQMatrix( cvsrc, cvdst, warp_translate_inv );
 	}
 	else
 	{
-		cvWarpPerspectiveQMatrix( cvsrc, cvdst, warp_translate );  // calculate homography
-		cvWarpPerspectiveQMatrix( cvdst, cvsrc, warp_translate_inv );
+		//cvWarpPerspectiveQMatrix( cvsrc, cvdst, warp_translate );  // calculate homography
+		//cvWarpPerspectiveQMatrix( cvdst, cvsrc, warp_translate_inv );
 	}
 
 
