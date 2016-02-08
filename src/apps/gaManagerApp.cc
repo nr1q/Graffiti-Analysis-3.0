@@ -193,8 +193,8 @@ int GaManagerApp::hitTest (int x, int y)
 {
     if (polyButtons[0].bHitTest(x,y))
         return GA_MODE_PLAYER;
-    //else if (polyButtons[1].bHitTest(x,y))
-        //return GA_MODE_LASER;
+    else if (polyButtons[1].bHitTest(x,y))
+        return GA_MODE_LASER;
     //else if (polyButtons[2].bHitTest(x,y))
         //return GA_MODE_RECORDER;
 
