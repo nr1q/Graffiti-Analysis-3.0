@@ -98,18 +98,18 @@ void GaPlayerApp::setup()
     //// audio
     //audio.setup();
 
-    #ifdef GA_STACK_SCREENS
-        archPhysics.setup(screenW, screenH);
-        archPhysics.floorH = screenH * 2;
-    #else
-        archPhysics.setup(screenW, screenH);
-    #endif
+    //#ifdef GA_STACK_SCREENS
+        //archPhysics.setup(screenW, screenH);
+        //archPhysics.floorH = screenH * 2;
+    //#else
+        //archPhysics.setup(screenW, screenH);
+    //#endif
 
     archPDropTime = 0;
 
     if (bUseArchitecture) {
-        archPhysics.archImage.loadImage(pathToSettings+"arch.jpg");
-        archPhysics.loadFromXML(pathToSettings+"architecture.xml");
+        //archPhysics.archImage.loadImage(pathToSettings+"arch.jpg");
+        //archPhysics.loadFromXML(pathToSettings+"architecture.xml");
         createWarpedArchitecture();
     }
 
@@ -235,8 +235,8 @@ void GaPlayerApp::updateTransition (int type)
 
         if (bUseArchitecture) {
             if (drawer.prelimTransTime > panel.getValueI("wait_time")) {
-                if (archPhysics.bMakingParticles)
-                    archPDropTime += dt;
+                //if (archPhysics.bMakingParticles)
+                    //archPDropTime += dt;
 
                 bRotating = false;
 
@@ -252,26 +252,26 @@ void GaPlayerApp::updateTransition (int type)
                 tags[currentTagID].rotation.y = pct*tags[currentTagID].rotation.y + (1-pct)*(0);
                 tags[currentTagID].rotation.z = pct*tags[currentTagID].rotation.z + (1-pct)*(0);
 
-                if (pct < .9 && !archPhysics.bMakingParticles)
-                    archPhysics.turnOnParticleBoxes(&particleDrawer.PS);
+                //if (pct < .9 && !archPhysics.bMakingParticles)
+                    //archPhysics.turnOnParticleBoxes(&particleDrawer.PS);
 
                 if (particleDrawer.xalpha  > 0)
                     particleDrawer.xalpha -= .5*dt;
 
-                // if all particles have fallen and
+                //// if all particles have fallen and
                 float maxTimeToFall = panel.getValueI("max_arch_time");
-                if (
-                    archPhysics.bMadeAll ||
-                    (maxTimeToFall >= 0 && archPDropTime > maxTimeToFall)
-                ) {
-                    // do average transition
+                //if (
+                    //archPhysics.bMadeAll ||
+                    //(maxTimeToFall >= 0 && archPDropTime > maxTimeToFall)
+                //) {
+                    //// do average transition
                     drawer.transition(dt,.15);
                     drawer.alpha -= .35*dt;
                     if (particleDrawer.alpha > 0)
                         particleDrawer.alpha -= .5*dt;
                     if (particleDrawer.xalpha > 0)
                         particleDrawer.xalpha -= .5*dt;
-                }
+                //}
              }
         } else {
             // do average transition
@@ -329,10 +329,10 @@ void GaPlayerApp::updateArchitecture()
     //if( drawer.prelimTransTime < panel.getValueI("wait_time") && !archPhysics.bMakingParticles)
     //    archPhysics.turnOnParticleBoxes(&particleDrawer.PS);
 
-    archPhysics.update(dt);
-    if(archPhysics.bMakingParticles) {
-        archPhysics.createParticleSet(&particleDrawer.PS);
-    }
+    //archPhysics.update(dt);
+    //if(archPhysics.bMakingParticles) {
+        //archPhysics.createParticleSet(&particleDrawer.PS);
+    //}
 }
 
 //--------------------------------------------------------------
@@ -397,14 +397,14 @@ void GaPlayerApp::drawTagNormal()
         if (bUseArchitecture) {
             //glViewport(0,0,fbo.texData.width,fbo.texData.height);
 
-            // set translation in polygon tool so drwaing happens in correct place
-            archPhysics.offSetPre.x = (tags[currentTagID].position.x);
-            archPhysics.offSetPre.y = (tags[currentTagID].position.y);
-            archPhysics.offSet.x = (-tags[currentTagID].min.x*tags[currentTagID].drawScale) + (-tags[currentTagID].center.x*tags[currentTagID].drawScale);
-            archPhysics.offSet.y = (-tags[currentTagID].min.y*tags[currentTagID].drawScale) + (-tags[currentTagID].center.y*tags[currentTagID].drawScale);
-            archPhysics.scale = tags[currentTagID].position.z;
+            //// set translation in polygon tool so drwaing happens in correct place
+            //archPhysics.offSetPre.x = (tags[currentTagID].position.x);
+            //archPhysics.offSetPre.y = (tags[currentTagID].position.y);
+            //archPhysics.offSet.x = (-tags[currentTagID].min.x*tags[currentTagID].drawScale) + (-tags[currentTagID].center.x*tags[currentTagID].drawScale);
+            //archPhysics.offSet.y = (-tags[currentTagID].min.y*tags[currentTagID].drawScale) + (-tags[currentTagID].center.y*tags[currentTagID].drawScale);
+            //archPhysics.scale = tags[currentTagID].position.z;
 
-            archPhysics.draw();
+            //archPhysics.draw();
         }
 
 
@@ -453,8 +453,8 @@ void GaPlayerApp::draw()
         }
 
         ofSetColor(150, 150, 150, 255);
-        if( bUseArchitecture && panel.getValueB("show_image") )
-            archPhysics.drawTestImage();
+        //if( bUseArchitecture && panel.getValueB("show_image") )
+            //archPhysics.drawTestImage();
 
         //---------  fbo renders
         if (modeRender == GA_RMODE_NORMAL) {
@@ -556,14 +556,14 @@ void GaPlayerApp::drawStereoEye(float eyeDist)
         if (bUseArchitecture) {
             //glViewport(0,0,fbo.texData.width,fbo.texData.height);
 
-            // set translation in polygon tool so drwaing happens in correct place
-            archPhysics.offSetPre.x = (tags[currentTagID].position.x);
-            archPhysics.offSetPre.y = (tags[currentTagID].position.y);
-            archPhysics.offSet.x = (-tags[currentTagID].min.x*tags[currentTagID].drawScale) + (-tags[currentTagID].center.x*tags[currentTagID].drawScale);
-            archPhysics.offSet.y = (-tags[currentTagID].min.y*tags[currentTagID].drawScale) + (-tags[currentTagID].center.y*tags[currentTagID].drawScale);
-            archPhysics.scale = tags[currentTagID].position.z;
+            //// set translation in polygon tool so drwaing happens in correct place
+            //archPhysics.offSetPre.x = (tags[currentTagID].position.x);
+            //archPhysics.offSetPre.y = (tags[currentTagID].position.y);
+            //archPhysics.offSet.x = (-tags[currentTagID].min.x*tags[currentTagID].drawScale) + (-tags[currentTagID].center.x*tags[currentTagID].drawScale);
+            //archPhysics.offSet.y = (-tags[currentTagID].min.y*tags[currentTagID].drawScale) + (-tags[currentTagID].center.y*tags[currentTagID].drawScale);
+            //archPhysics.scale = tags[currentTagID].position.z;
 
-            archPhysics.draw();
+            //archPhysics.draw();
         }
     }
 }
@@ -571,14 +571,14 @@ void GaPlayerApp::drawStereoEye(float eyeDist)
 //--------------------------------------------------------------
 void GaPlayerApp::drawControls()
 {
-    // -- arch drawing tool
-    if (bUseArchitecture) {
-        if (
-            panel.getSelectedPanelName() == "Architecture Settings" &&
-            (archPhysics.bDrawingActive || panel.getValueB("show_drawing_tool"))
-        )
-            archPhysics.drawTool();
-    }
+    //// -- arch drawing tool
+    //if (bUseArchitecture) {
+        //if (
+            //panel.getSelectedPanelName() == "Architecture Settings" &&
+            //(archPhysics.bDrawingActive || panel.getValueB("show_drawing_tool"))
+        //)
+            //archPhysics.drawTool();
+    //}
 
 
     //--- control panel
@@ -639,8 +639,8 @@ void GaPlayerApp::keyPressed (ofKeyEventArgs& event)
             }
             break;
         case OF_KEY_RETURN:
-            if( panel.getSelectedPanelName() == "Architecture Settings" )
-                archPhysics.pGroup.addPoly();
+            //if( panel.getSelectedPanelName() == "Architecture Settings" )
+                //archPhysics.pGroup.addPoly();
             break;
         default:
             break;
@@ -714,11 +714,11 @@ void GaPlayerApp::mousePressed (ofMouseEventArgs& event)
     if( bShowPanel ) panel.mousePressed(event.x,event.y,event.button);
     if( bShowPanel ) keypanel.mousePressed(event.x,event.y,event.button);
 
-    if(bUseArchitecture)
-    {
-            if( panel.isMouseInPanel(event.x, event.y) ) archPhysics.pGroup.disableAll(true);
-            else if( panel.getSelectedPanelName() == "Architecture Settings") archPhysics.pGroup.reEnableLast();
-    }
+    //if(bUseArchitecture)
+    //{
+            //if( panel.isMouseInPanel(event.x, event.y) ) archPhysics.pGroup.disableAll(true);
+            //else if( panel.getSelectedPanelName() == "Architecture Settings") archPhysics.pGroup.reEnableLast();
+    //}
 
     //if(bUseAudio)
     //{
@@ -777,7 +777,7 @@ void GaPlayerApp::nextTag (int dir)
 
     drawer.resetTransitions();
     rotFixTime = 0;
-    archPhysics.reset();
+    //archPhysics.reset();
 
     cout << "total pts this tag " << tags[currentTagID].getNPts() << endl;
 }
@@ -1103,48 +1103,48 @@ void GaPlayerApp::updateControlPanel(bool bUpdateAll)
         //audio.panel.hide();
     //}
 
-    if (bUseArchitecture && panel.getSelectedPanelName() == "Architecture Settings") {
-        if (panel.bNewPanelSelected) {
-            archPhysics.bDrawingActive = true;
-            archPhysics.pGroup.reEnableLast();
-        }
+    //if (bUseArchitecture && panel.getSelectedPanelName() == "Architecture Settings") {
+        //if (panel.bNewPanelSelected) {
+            //archPhysics.bDrawingActive = true;
+            //archPhysics.pGroup.reEnableLast();
+        //}
 
-        if (panel.getValueB("arch_done")) {
-            panel.setValueB("arch_done",false);
-            createWarpedArchitecture();
-        }
+        //if (panel.getValueB("arch_done")) {
+            //panel.setValueB("arch_done",false);
+            //createWarpedArchitecture();
+        //}
 
-        if (panel.getValueB("new_structure")) {
-            panel.setValueB("new_structure",false);
-            archPhysics.pGroup.addPoly();
-        }
+        //if (panel.getValueB("new_structure")) {
+            //panel.setValueB("new_structure",false);
+            //archPhysics.pGroup.addPoly();
+        //}
 
-        if (panel.getValueB("arch_save")) {
-            panel.setValueB("arch_save",false);
-            archPhysics.saveToXML(pathToSettings+"architecture.xml");
-        }
+        //if (panel.getValueB("arch_save")) {
+            //panel.setValueB("arch_save",false);
+            //archPhysics.saveToXML(pathToSettings+"architecture.xml");
+        //}
 
-        if (panel.getValueB("arch_load")) {
-            panel.setValueB("arch_load",false);
-            archPhysics.loadFromXML(pathToSettings+"architecture.xml");
-            createWarpedArchitecture();
-        }
+        //if (panel.getValueB("arch_load")) {
+            //panel.setValueB("arch_load",false);
+            //archPhysics.loadFromXML(pathToSettings+"architecture.xml");
+            //createWarpedArchitecture();
+        //}
 
-        if (panel.getValueB("arch_clear")) {
-            panel.setValueB("arch_clear",false);
-            archPhysics.pGroup.clear();
-            archPhysics.pGroup.addPoly();
-        }
-    }
+        //if (panel.getValueB("arch_clear")) {
+            //panel.setValueB("arch_clear",false);
+            //archPhysics.pGroup.clear();
+            //archPhysics.pGroup.addPoly();
+        //}
+    //}
 
-    if (bUseArchitecture &&  panel.getSelectedPanelName() == "Architecture Settings") {
-        archPhysics.bShowArchitecture = panel.getValueB("show_drawing_tool");
+    //if (bUseArchitecture &&  panel.getSelectedPanelName() == "Architecture Settings") {
+        //archPhysics.bShowArchitecture = panel.getValueB("show_drawing_tool");
 
-        if( panel.isMouseInPanel(lastX, lastY) ) {
-            archPhysics.setPhysicsParams( panel.getValueF("box_mass"), panel.getValueF("box_bounce"), panel.getValueF("box_friction"));
-            archPhysics.box2d.setGravity(0,panel.getValueI("gravity") );
-        }
-    }
+        //if( panel.isMouseInPanel(lastX, lastY) ) {
+            //archPhysics.setPhysicsParams( panel.getValueF("box_mass"), panel.getValueF("box_bounce"), panel.getValueF("box_friction"));
+            //archPhysics.box2d.setGravity(0,panel.getValueI("gravity") );
+        //}
+    //}
 
     if( panel.getSelectedPanelName() == "FBO Warper") {
         pWarper.enableEditing();
@@ -1202,35 +1202,35 @@ string GaPlayerApp::getCurrentTagName()
 
 void GaPlayerApp::createWarpedArchitecture()
 {
-    wPolys.clear();
+    //wPolys.clear();
 
-    for (unsigned i = 0; i < archPhysics.pGroup.polys.size(); i++) {
-        polySimple tPoly;
-        tPoly.pts.assign( archPhysics.pGroup.polys[i]->pts.begin(),archPhysics.pGroup.polys[i]->pts.end() );
-        wPolys.push_back(tPoly);
-    }
+    //for (unsigned i = 0; i < archPhysics.pGroup.polys.size(); i++) {
+        //polySimple tPoly;
+        //tPoly.pts.assign( archPhysics.pGroup.polys[i]->pts.begin(),archPhysics.pGroup.polys[i]->pts.end() );
+        //wPolys.push_back(tPoly);
+    //}
 
-    /*#ifdef GA_STACK_SCREENS
-        for (int i = 0; i < wPolys.size(); i++) {
-            for (int j = 0; j < wPolys[i].pts.size(); j++) {
+    //[>#ifdef GA_STACK_SCREENS
+        //for (int i = 0; i < wPolys.size(); i++) {
+            //for (int j = 0; j < wPolys[i].pts.size(); j++) {
+                ////ofVec3f wPoint = pWarper.warpPoint(wPolys[i].pts[j]);
+                //if(wPolys[i].pts[j].x > 1024*2) {
+                    //wPolys[i].pts[j].x -= 1024*2;
+                    //wPolys[i].pts[j].y += 768;
+                //} else if (wPolys[i].pts[j].x > 1024) {
+                    //wPolys[i].pts[j].x -= 1024;
+                //}
+            //}
+        //}
+    //#else*/
+        //for (int i = 0; i < wPolys.size(); i++) {
+            //for (int j = 0; j < wPolys[i].pts.size(); j++) {
                 //ofVec3f wPoint = pWarper.warpPoint(wPolys[i].pts[j]);
-                if(wPolys[i].pts[j].x > 1024*2) {
-                    wPolys[i].pts[j].x -= 1024*2;
-                    wPolys[i].pts[j].y += 768;
-                } else if (wPolys[i].pts[j].x > 1024) {
-                    wPolys[i].pts[j].x -= 1024;
-                }
-            }
-        }
-    #else*/
-        for (int i = 0; i < wPolys.size(); i++) {
-            for (int j = 0; j < wPolys[i].pts.size(); j++) {
-                ofVec3f wPoint = pWarper.warpPoint(wPolys[i].pts[j]);
-                wPolys[i].pts[j] = wPoint;
-            }
-        }
-    //#endif
-    archPhysics.createArchitectureFromPolys(wPolys);
+                //wPolys[i].pts[j] = wPoint;
+            //}
+        //}
+    ////#endif
+    //archPhysics.createArchitectureFromPolys(wPolys);
 }
 
 

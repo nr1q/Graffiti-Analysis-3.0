@@ -102,7 +102,7 @@ class GaPlayerApp
 
         //---------- interactive architecture
         void createWarpedArchitecture();
-        GrafArchitecture       archPhysics;     // physics / architecture effects
+        //GrafArchitecture       archPhysics;     // physics / architecture effects
         vector<polySimple>     wPolys;
         float                  archPDropTime;
 

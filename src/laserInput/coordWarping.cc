@@ -2,47 +2,51 @@
 
 //---------------------------
 coordWarping::coordWarping(){
-	translate = cvCreateMat(3,3,CV_32FC1);
+    translate = cvCreateMat(3,3,CV_32FC1);
 }
 
 //---------------------------
 void coordWarping::calculateMatrix(ofVec3f src[4], ofVec3f dst[4]){
 
-	cvSetZero(translate);
-	for (int i = 0; i < 4; i++){
-		cvsrc[i].x = src[i].x;
-		cvsrc[i].y = src[i].y;
-		cvdst[i].x = dst[i].x;
-		cvdst[i].y = dst[i].y;
-	}
+    cvSetZero(translate);
+    for (int i = 0; i < 4; i++){
+        cvsrc[i].x = src[i].x;
+        cvsrc[i].y = src[i].y;
+        cvdst[i].x = dst[i].x;
+        cvdst[i].y = dst[i].y;
+    }
 
-	//cvWarpPerspectiveQMatrix(cvsrc, cvdst, translate);  // calculate homography
+#if defined( TARGET_LINUX )
+    cvWarpPerspectiveQMatrix(cvsrc, cvdst, translate);  // calculate homography
+#else
+    cvGetPerspectiveTransform(cvsrc, cvdst, translate);
+#endif
 
-	int n       = translate->cols;
-	float *data = translate->data.fl;
+    int n       = translate->cols;
+    float *data = translate->data.fl;
 
 }
 
 //---------------------------
 ofVec3f coordWarping::transform(float xIn, float yIn){
 
-	ofVec3f out;
+    ofVec3f out;
 
-	float *data = translate->data.fl;
+    float *data = translate->data.fl;
 
-	float a = data[0];
-	float b = data[1];
-	float c = data[2];
-	float d = data[3];
+    float a = data[0];
+    float b = data[1];
+    float c = data[2];
+    float d = data[3];
 
-	float e = data[4];
-	float f = data[5];
-	float i = data[6];
-	float j = data[7];
+    float e = data[4];
+    float f = data[5];
+    float i = data[6];
+    float j = data[7];
 
-	//from Myler & Weeks - so fingers crossed!
-	out.x = ((a*xIn + b*yIn + c) / (i*xIn + j*yIn + 1));
-	out.y = ((d*xIn + e*yIn + f) / (i*xIn + j*yIn + 1));
+    //from Myler & Weeks - so fingers crossed!
+    out.x = ((a*xIn + b*yIn + c) / (i*xIn + j*yIn + 1));
+    out.y = ((d*xIn + e*yIn + f) / (i*xIn + j*yIn + 1));
 
-	return out;
+    return out;
 }
