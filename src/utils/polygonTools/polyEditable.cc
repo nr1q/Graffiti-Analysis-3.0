@@ -9,6 +9,7 @@
 
 #include "polyEditable.h"
 
+extern ofAppGLFWWindow* window;
 
 polyEditable::polyEditable() : polyAdv()
 {
@@ -295,20 +296,24 @@ void polyEditable::mousePressed (ofMouseEventArgs& event)
     lastMouse.set( event.x, event.y );
     ofVec3f m = getMouseAltered( ofVec3f(event.x, event.y) );//ofVec3f( (event.x-offSet.x)*invScale, (event.y-offSet.y)*invScale);
 
-    // TODO implement this functionality for GLFW
-    std::cout << "implement GLFW" << std::endl;
-    //int modifier = glutGetModifiers();
+    auto glfwWindow = window->getGLFWWindow();
+    bool shiftPressed =
+        glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+        glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    bool controlPressed =
+        glfwGetKey(glfwWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
+        glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS;
 
-    //if( modifier == GLUT_ACTIVE_SHIFT)
-    //{
-            //setMode(POLY_EDIT_MODE_MOVE_PTS);//,true);
-    //}else if( modifier == GLUT_ACTIVE_CTRL )
-    //{
-            //setMode(POLY_EDIT_MODE_ROTATE,true);
-    //}else if( mode == POLY_EDIT_MODE_MOVE_PTS && bTempMode )
-            //setMode(prevMode);
-    //else if( event.button == 0  ) setMode(POLY_EDIT_MODE_ADD_PTS);
-    ////else setMode(POLY_EDIT_MODE_MOVE_ALL);
+    if (shiftPressed)
+        setMode(POLY_EDIT_MODE_MOVE_PTS);//,true);
+    else if (controlPressed)
+        setMode(POLY_EDIT_MODE_ROTATE, true);
+    else if (mode == POLY_EDIT_MODE_MOVE_PTS && bTempMode )
+        setMode(prevMode);
+    else if (event.button == 0)
+        setMode(POLY_EDIT_MODE_ADD_PTS);
+    //else
+    //    setMode(POLY_EDIT_MODE_MOVE_ALL);
 
 
     if (mode == POLY_EDIT_MODE_ADD_PTS && event.button == 0) {

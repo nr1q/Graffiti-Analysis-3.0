@@ -9,7 +9,6 @@
 
 #include "polyUtils.h"
 
-
 bool pointInPolygon (float x, float y, vector<ofVec3f> pts)
 {
     // code via Zach Lieberman via Randolph Franklin...

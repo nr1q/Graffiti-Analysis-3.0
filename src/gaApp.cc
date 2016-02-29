@@ -123,13 +123,10 @@ void gaApp::mouseDragged(int x, int y, int button)
 void gaApp::mousePressed(int x, int y, int button)
 {
     auto glfwWindow = window->getGLFWWindow();
-    bool bShiftPressed = glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) ||
-                         glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT);
+    bool shiftPressed = glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+                        glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
 
-    if (bShiftPressed)
-        gaInteractiveApp.bShiftOn = true;
-    else
-        gaInteractiveApp.bShiftOn = false;
+    gaInteractiveApp.bShiftOn = shiftPressed;
 
     if (manager.mode == GA_MODE_START) {
         int hi = manager.hitTest(x, y);

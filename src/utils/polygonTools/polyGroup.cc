@@ -9,6 +9,9 @@
 
 #include "polyGroup.h"
 
+extern ofAppGLFWWindow* window;
+
+//static bool isInsideRect (float x, float y, ofRectangle rect);
 
 polyGroup::polyGroup()
 {
@@ -172,108 +175,106 @@ void polyGroup::mousePressed (ofMouseEventArgs& event)
 
     disableAll();
 
-    // TODO Implement GLFW for key modifiers from here…
-    std::cout << "implement GLFW" << std::endl;
-    ////--- check shift key
-    //int modifier = glutGetModifiers();
+    //--- check shift and control status
+    auto glfwWindow = window->getGLFWWindow();
+    bool shiftPressed =
+        glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+        glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+    bool controlPressed =
+        glfwGetKey(glfwWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS ||
+        glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS;
 
-    ////--- if left-click and no modifiers, create new, add points. if r-click choose the closest if inside boundingbox to move it
-    //if( event.button == 0 && modifier != GLUT_ACTIVE_SHIFT && modifier != GLUT_ACTIVE_CTRL ) {
-        //if( selectedId == -1 ) {
-            //// make new if we have none
-            //addPoly();
-            //addPoint( ofPoint(event.x,event.y) );
-            ////ofPoint m = polys[selectedId]->getMouseAltered(ofPoint(event.x,event.y));
-            ////polys[selectedId]->addPoint( ofPoint(m.x,m.y) );
-        //} else if( polys.size() > selectedId ) {
-            //if( !polys[selectedId]->bClosed ) {
-                ////addPoint( ofPoint(event.x,event.y) );
-                ////ofPoint m = polys[selectedId]->getMouseAltered(ofPoint(event.x,event.y));
-                ////polys[selectedId]->addPoint( ofPoint(m.x,m.y) );// add pt
-            //} else {
-                ////polys[selectedId]->disable();
-                //addPoly(); // make new if last is finished
-                //selectedId = polys.size()-1;
-                ////addPoint( ofPoint(event.x,event.y) );
-                ////ofPoint m = polys[selectedId]->getMouseAltered(ofPoint(event.x,event.y));
-                ////polys[selectedId]->addPoint( ofPoint(m.x,m.y) );
-            //}
-        //}
 
-        //if(polys.size() > selectedId) polys[selectedId]->enable();
+    //--- if left-click and no modifiers, create new, add points. if r-click choose the closest if inside boundingbox to move it
+    if (event.button == 0 && shiftPressed && controlPressed) {
+        if (selectedId == -1) {
+            // make new if we have none
+            addPoly();
+            addPoint( ofPoint(event.x,event.y) );
+            //ofPoint m = polys[selectedId]->getMouseAltered(ofPoint(event.x,event.y));
+            //polys[selectedId]->addPoint( ofPoint(m.x,m.y) );
+        } else if (polys.size() > selectedId) {
+            if (! polys[selectedId]->bClosed) {
+                //addPoint( ofPoint(event.x,event.y) );
+                //ofPoint m = polys[selectedId]->getMouseAltered(ofPoint(event.x,event.y));
+                //polys[selectedId]->addPoint( ofPoint(m.x,m.y) );// add pt
+            } else {
+                //polys[selectedId]->disable();
+                addPoly(); // make new if last is finished
+                selectedId = polys.size()-1;
+                //addPoint( ofPoint(event.x,event.y) );
+                //ofPoint m = polys[selectedId]->getMouseAltered(ofPoint(event.x,event.y));
+                //polys[selectedId]->addPoint( ofPoint(m.x,m.y) );
+            }
+        }
 
-    //} else {
+        if (polys.size() > selectedId)
+            polys[selectedId]->enable();
 
-        //// reset selectedId to none but remember original to restore after
-        //int lastId = selectedId;
-        //selectedId = -1;
-        //float cDist = 0;
+    } else {
 
-        //// find closest and set as selected
-        //for( int i = 0; i < polys.size(); i++)
-        //{
-            //ofPoint m = polys[i]->getMouseAltered( ofPoint(event.x,event.y) );
-            //ofRectangle boundingbox = polys[i]->getBoundingBox();
+        // reset selectedId to none but remember original to restore after
+        int lastId = selectedId;
+        selectedId = -1;
+        float cDist = 0;
 
-            //// make bounding area bigger so we can select more easily
-            //boundingbox.x -= 4;
-            //boundingbox.y -= 4;
-            //boundingbox.width     += 8;
-            //boundingbox.height    += 8;
+        // find closest and set as selected
+        for (int i = 0; i < polys.size(); i++) {
+            ofPoint m = polys[i]->getMouseAltered( ofPoint(event.x, event.y) );
+            ofRectangle boundingbox = polys[i]->getBoundingBox();
 
-            //// dist to point
-            //bool bCloseToCenter = false;
-            //bool bCloseToEndPt  = false;
+            // make bounding area bigger so we can select more easily
+            boundingbox.x      -= 4;
+            boundingbox.y      -= 4;
+            boundingbox.width  += 8;
+            boundingbox.height += 8;
 
-            //// if we are editing points, also check if we are close to point (but out of bounding box ok)
-            //if( modifier == GLUT_ACTIVE_SHIFT )
-            //{
-                //for( int j = 0; j < polys[i]->pts.size() ; j++)
-                //{
-                    //if( abs(m.x-polys[i]->pts[j].x) < polys[i]->selectDist &&
-                        //abs(m.y-polys[i]->pts[j].y) < polys[i]->selectDist )
-                            //bCloseToEndPt = true;
-                //}
-            //}
+            // dist to point
+            bool bCloseToCenter = false;
+            bool bCloseToEndPt  = false;
 
-            //// check dist to centroid in case bounding very small
-            //ofPoint c = polys[i]->getCentroid();
+            // if we are editing points, also check if we are close to point (but out of bounding box ok)
+            if (shiftPressed) {
+                for (int j = 0; j < polys[i]->pts.size() ; j++) {
+                    if (abs(m.x-polys[i]->pts[j].x) < polys[i]->selectDist &&
+                        abs(m.y-polys[i]->pts[j].y) < polys[i]->selectDist)
+                        bCloseToEndPt = true;
+                }
+            }
 
-            //for( int j = 0; j < polys[i]->pts.size(); j++)
-            //{
-                //if( abs(m.x-c.x) < polys[i]->selectDist &&
-                    //abs(m.y-c.y) < polys[i]->selectDist )
-                         //bCloseToCenter = true;
+            // check dist to centroid in case bounding very small
+            ofPoint c = polys[i]->getCentroid();
 
-            //}
+            for (int j = 0; j < polys[i]->pts.size(); j++) {
+                if (abs(m.x-c.x) < polys[i]->selectDist &&
+                    abs(m.y-c.y) < polys[i]->selectDist)
+                    bCloseToCenter = true;
+            }
 
-            //// if meet requirements see if we are closer to this than last and remember
-            //if( isInsideRect(m.x, m.y, boundingbox) || bCloseToEndPt || bCloseToCenter)
-            //{
-                //float distSq = ( (m.x-c.x)*(m.x-c.x) + (m.y-c.y)*(m.y-c.y) );
-                //if( selectedId == -1 || distSq < cDist )
-                //{
-                    //selectedId = i;
-                    //cDist = distSq;
-                //}
-            //}
-        //}
+            // if meet requirements see if we are closer to this than last and remember
+            if (isInsideRect(m.x, m.y, boundingbox) || bCloseToEndPt || bCloseToCenter) {
+                float distSq = ( (m.x-c.x)*(m.x-c.x) + (m.y-c.y)*(m.y-c.y) );
+                if (selectedId == -1 || distSq < cDist) {
+                    selectedId = i;
+                    cDist = distSq;
+                }
+            }
+        }
 
-        //// pick the closest
-        //if( selectedId >= 0 && polys.size() > selectedId )
-        //{
-            //polys[selectedId]->enable();
-            //polys[selectedId]->mousePressed(event);
-        //}
+        // pick the closest
+        if (selectedId >= 0 && polys.size() > selectedId) {
+            polys[selectedId]->enable();
+            polys[selectedId]->mousePressed(event);
+        }
 
-        //// if nobody is close, keep previous
-        //if(selectedId == -1) selectedId = lastId;
-    //}
-    // TODO …to here
+        // if nobody is close, keep previous
+        if (selectedId == -1)
+            selectedId = lastId;
+    }
 
-    //cout << "selectedId: " << selectedId << endl;
-    //cout << "selected enabled: " << polys[selectedId]->isEnabled() << endl;
-    //polys[selectedId]->enable();
+    cout << "selectedId: " << selectedId << endl;
+    cout << "selected enabled: " << polys[selectedId]->isEnabled() << endl;
+    polys[selectedId]->enable();
 }
 
 

@@ -1,5 +1,6 @@
 #include "grafTagMulti.h"
 
+extern ofAppGLFWWindow* window;
 
 grafTagMulti::grafTagMulti()
 {
@@ -313,18 +314,16 @@ void grafTagMulti::mouseDragged (ofMouseEventArgs& event)
 
 void grafTagMulti::mousePressed (ofMouseEventArgs& event)
 {
-    GLFWwindow* window;
     lastX = event.x;
     lastY = event.y;
 
-    if (!bMouseActive) return;
+    if (! bMouseActive) return;
 
-    // TODO fix this using GLFW
-    std::cout << "implement GLFW" << std::endl;
-    //std::cout << window << std::endl;
-    //int modifier = glutGetModifiers();
-    //if( modifier == GLUT_ACTIVE_SHIFT) bShift = true;
-    //else bShift = false;
+    auto glfwWindow = window->getGLFWWindow();
+    bool shiftPressed = glfwGetKey(glfwWindow, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ||
+                        glfwGetKey(glfwWindow, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS;
+
+    bShift = shiftPressed;
 }
 
 
