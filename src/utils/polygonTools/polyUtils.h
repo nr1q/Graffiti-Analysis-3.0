@@ -14,7 +14,7 @@
 
 bool pointInPolygon (float x, float y, vector<ofVec3f>pts);
 
-static bool isInsideRect (float x, float y, ofRectangle rect);
+bool _isInsideRect (float x, float y, ofRectangle rect);
 
 bool intersectionTwoLines (ofVec3f pt1, ofVec3f pt2, ofVec3f pt3, ofVec3f pt4, ofVec3f * iPt);
 bool intersectionTwoLines2 (ofVec3f pt1, ofVec3f pt2, ofVec3f pt3, ofVec3f pt4, ofVec3f * iPt);

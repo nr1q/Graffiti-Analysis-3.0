@@ -32,7 +32,7 @@ bool pointInPolygon (float x, float y, vector<ofVec3f> pts)
 }
 
 
-bool isInsideRect (float x, float y, ofRectangle rect)
+bool _isInsideRect (float x, float y, ofRectangle rect)
 {
     return (
         x >= rect.x && x <= rect.x + rect.width &&

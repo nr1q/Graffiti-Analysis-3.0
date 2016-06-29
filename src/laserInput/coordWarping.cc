@@ -16,11 +16,11 @@ void coordWarping::calculateMatrix(ofVec3f src[4], ofVec3f dst[4]){
         cvdst[i].y = dst[i].y;
     }
 
-#if defined( TARGET_LINUX )
-    cvWarpPerspectiveQMatrix(cvsrc, cvdst, translate);  // calculate homography
-#else
+//#if defined( TARGET_LINUX )
+    //cvWarpPerspectiveQMatrix(cvsrc, cvdst, translate);  // calculate homography
+//#else
     cvGetPerspectiveTransform(cvsrc, cvdst, translate);
-#endif
+//#endif
 
     int n       = translate->cols;
     float *data = translate->data.fl;

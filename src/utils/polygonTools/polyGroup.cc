@@ -10,8 +10,7 @@
 #include "polyGroup.h"
 
 extern ofAppGLFWWindow* window;
-
-//static bool isInsideRect (float x, float y, ofRectangle rect);
+//extern bool isInsideRect (float x, float y, ofRectangle rect);
 
 polyGroup::polyGroup()
 {
@@ -252,7 +251,7 @@ void polyGroup::mousePressed (ofMouseEventArgs& event)
             }
 
             // if meet requirements see if we are closer to this than last and remember
-            if (isInsideRect(m.x, m.y, boundingbox) || bCloseToEndPt || bCloseToCenter) {
+            if (_isInsideRect(m.x, m.y, boundingbox) || bCloseToEndPt || bCloseToCenter) {
                 float distSq = ( (m.x-c.x)*(m.x-c.x) + (m.y-c.y)*(m.y-c.y) );
                 if (selectedId == -1 || distSq < cDist) {
                     selectedId = i;
