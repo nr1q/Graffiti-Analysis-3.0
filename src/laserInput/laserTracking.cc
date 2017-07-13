@@ -101,7 +101,7 @@ void laserTracking::setupVideo(string videoPath)
 {
     clearData();
 
-    VP.loadMovie(videoPath);
+    VP.load(videoPath);
     VP.play();
     VP.setUseTexture(true);
     W = VP.getWidth();
@@ -214,24 +214,22 @@ void laserTracking::processFrame(float hue, float hueThresh, float sat, float va
         // Part 1 - get the video data
         ///////////////////////////////////////////////////////////
 
-        //pointer to our incoming video pixels
-        unsigned char * pixCam;
-
         //either grab pixels from video or grab from camera
         if(bVideoSetup){
                 VP.update();
-                pixCam  = VP.getPixels();
         }else{
                 VG.update();
-                pixCam  = VG.getPixels();
         }
+
+        //pointer to our incoming video pixels
+        ofPixels & pixCam = (bVideoSetup) ? VP.getPixels() : VG.getPixels();
 
         ///////////////////////////////////////////////////////////
         // Part 2 - warp the video based on our quad
         ///////////////////////////////////////////////////////////
 
         //add to openCV and warp to our dst image
-        VideoFrame.setFromPixels(pixCam, W, H);
+        VideoFrame.setFromPixels(pixCam);
 
         if (accurateQuad) {
             WarpedFrame.warpIntoMe(VideoFrame, QUAD.getScaledQuadPoints(W,H), warpDst);
@@ -249,7 +247,7 @@ void laserTracking::processFrame(float hue, float hueThresh, float sat, float va
         //based on hue sat and val
         int totalPixels = W*H*3;
 
-        unsigned char * pix = hsvFrame.getPixels();
+        ofPixels & pix = hsvFrame.getPixels();
 
         float h                 = hue           * 255;
         float ht                = hueThresh * 255;
